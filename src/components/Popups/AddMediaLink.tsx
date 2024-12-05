@@ -14,6 +14,7 @@ const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
   const add = (url: any) => {
     console.log(url);
     props.addLink({ url: url, source: props.source });
+    setSearchResults([]);
     props.cancelFunction();
   };
 
@@ -62,7 +63,13 @@ const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
                 </button>
               </>
             ))}
-            <button type="reset" onClick={() => props.cancelFunction()}>
+            <button
+              type="reset"
+              onClick={() => {
+                setSearchResults([]);
+                props.cancelFunction();
+              }}
+            >
               Cancel
             </button>
           </form>

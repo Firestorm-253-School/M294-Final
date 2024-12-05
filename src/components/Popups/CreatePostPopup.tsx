@@ -1,3 +1,6 @@
+//!!!!IMPLEMENT ERROR HANDLING!!!!!
+//AND SPOTIFY!!!
+
 import { useState } from "react";
 import AddMediaLink from "./AddMediaLink";
 import { ApiPost } from "../api";
