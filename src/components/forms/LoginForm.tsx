@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Post } from "../components/api";
+import { Post } from "../../components/api";
 
-export interface ILoginPageProps {}
+export interface ILoginFormProps {}
 
-const LoginPage: React.FC<ILoginPageProps> = (props) => {
+const LoginForm: React.FC<ILoginFormProps> = (props) => {
   const [error, setError] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -13,6 +13,7 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
     if (response.token) {
       setIsLoggedIn(true);
       localStorage.setItem("auth_token", response.token);
+      //redirect
     } else {
       setError(true);
     }
@@ -20,7 +21,8 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
   return (
     <>
-      {error ? <p>Error</p> : null}
+      <h1>Login</h1>
+      {error ? <p>Username and Password combination doesn't match!</p> : null}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -42,6 +44,7 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
           name="username"
           id="username"
           placeholder="Your Username"
+          required
         />
         <label htmlFor="password">Passwort</label>
         <input
@@ -49,6 +52,7 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
           name="password"
           id="password"
           placeholder="Your Password"
+          required
         />
         <button>Login</button>
       </form>
@@ -57,4 +61,4 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
   );
 };
 
-export default LoginPage;
+export default LoginForm;
