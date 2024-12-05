@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Get } from "../api";
+import { ApiGet } from "../api";
 import Post from "../../interfaces/Post";
 import PostItem from "./PostItem";
 
@@ -18,7 +18,7 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 	useEffect(() => {
 		(async () => {
 			setLoading(true);
-			const posts = await Get("posts");
+			const posts = await ApiGet("posts");
 			setPosts(posts);
 			setLoading(false);
 		})();

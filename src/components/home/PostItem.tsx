@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Get } from "../api";
+import { ApiGet } from "../api";
 import Post from "../../interfaces/Post";
 import MediaLink from "../../interfaces/MediaLink";
 import User from "../../interfaces/User";
@@ -18,7 +18,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
     useEffect(() => {
 		(async () => {
 			setLoading(true);
-			setUser(await Get("users/" + post.user_id));
+			setUser(await ApiGet("users/" + post.user_id));
 			setLoading(false);
 		})();
 	}, []);
