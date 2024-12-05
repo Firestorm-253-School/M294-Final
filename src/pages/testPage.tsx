@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import CreatePostPopup from "../components/Popups/CreatePostPopup";
 import { useState } from "react";
 
@@ -8,7 +7,7 @@ const TestPage: React.FC<ITestPageProps> = (props) => {
   const [popup, setPopup] = useState(false);
   return (
     <>
-      {popup ? <CreatePostPopup></CreatePostPopup> : null}
+      <CreatePostPopup isOpen={popup}></CreatePostPopup>
       <button
         onClick={() => {
           setPopup((popup) => !popup);

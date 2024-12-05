@@ -1,11 +1,20 @@
-export interface ICreatePostPopupProps {}
+export interface ICreatePostPopupProps {
+  isOpen: boolean;
+}
 
 const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
   return (
     <>
-      <div style={{ position: "absolute", top: "0px" }}>
-        <h1>Create A Post</h1>
-      </div>
+      {props.isOpen ? (
+        <div style={{ position: "absolute", top: "0px" }}>
+          <h1>Create Post</h1>
+          <textarea
+            name="content"
+            id="content"
+            placeholder="write something"
+          ></textarea>
+        </div>
+      ) : null}
     </>
   );
 };
