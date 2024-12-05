@@ -1,11 +1,14 @@
 export interface IAddMediaLinkProps {
   isVisible: boolean;
   cancelFunction: Function;
+  addLink: any;
+  source: String;
 }
 
 const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
   const add = (formData: any) => {
     console.log(formData.link);
+    props.addLink({ url: formData.link, source: props.source });
     props.cancelFunction();
   };
   return (
