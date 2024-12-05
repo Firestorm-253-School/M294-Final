@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Post } from "../../components/api";
+import { ApiPost } from "../../components/api";
 
 export interface ILoginFormProps {}
 
@@ -8,7 +8,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = async (formData: any) => {
-    const response = await Post(formData, "auth/login", true);
+    const response = await ApiPost(formData, "auth/login", true);
     console.log(response);
     if (response.token) {
       setIsLoggedIn(true);

@@ -1,38 +1,54 @@
+import { useEffect, useState } from "react";
+
+import { ApiPost, ApiGet } from "../api";
+import Post from "../../interfaces/Post";
 import Reaction from "../../interfaces/Reaction";
 
 export interface IReactionContainerProps {
-	reactions: Reaction[];
+	post: Post;
 }
 
 const ReactionContainer: React.FC<IReactionContainerProps> = (props) => {
-	const { reactions } = props;
+	const { post } = props;
 
-    let thumbs_up = 0
-    let thumbs_down = 0
+    const [ current_state, setPost] = useState(post)
+    const { thumbs_up, thumbs_down } = get_likes(current_state.reactions)
 
-    reactions.forEach((reaction: Reaction) => 
-    {
-        switch(reaction.emoji) {
-            case '👍':
-                thumbs_up += 1
-                break;
-            case '👎':
-                thumbs_down += 1
-                break;
-            default:
-                console.error("invalid emoji: ", reaction.emoji);
-                break;
-          }
-    })
+	const handleClick = async (emoji: string) => {
+        await ApiPost({ reaction: emoji }, `posts/${post.id}/react`);
 
+        const updated_post = await ApiGet("posts/" + post.id);
+        setPost(updated_post)
+	};
 
 	return (
 		<>
-            <p>👍 {thumbs_up}</p>
-            <p>👎 {thumbs_down}</p>
+			<button onClick={() => handleClick("👍")}>👍 {thumbs_up}</button>
+			<button onClick={() => handleClick("👎")}>👎 {thumbs_down}</button>
 			<br />
 		</>
 	);
 };
+
+function get_likes(reactions: Reaction[]) {
+	let thumbs_up = 0;
+	let thumbs_down = 0;
+
+	reactions.forEach((reaction: Reaction) => {
+		switch (reaction.emoji) {
+			case "👍":
+				thumbs_up += 1;
+				break;
+			case "👎":
+				thumbs_down += 1;
+				break;
+			default:
+				console.error("invalid emoji: ", reaction.emoji);
+				break;
+		}
+	});
+
+	return { thumbs_up: thumbs_up, thumbs_down: thumbs_down };
+}
 
 export default ReactionContainer;

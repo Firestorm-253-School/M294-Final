@@ -1,8 +1,6 @@
 const address = "https://react-vid-app.vercel.app/api";
 
-export const Get = async (request: string) => {
-  await new Promise((res) => setTimeout(res, 450));
-
+export const ApiGet = async (request: string) => {
   try {
     const response = await fetch(address + "/" + request, {
       method: "GET",
@@ -21,17 +19,18 @@ export const Get = async (request: string) => {
   }
 };
 
-export const Post = async (data: object, request: string, isLogin: boolean) => {
+export const ApiPost = async (data: object, request: string, isLogin: boolean = false) => {
   try {
     const response = await fetch(address + "/" + request, {
       method: "POST",
       headers: isLogin
-        ? {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          }
-        : {},
+        ? {}
+        : {
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
       body: JSON.stringify(data),
     });
+
 
     if (!response.ok) {
       console.error("Network response was not ok");
