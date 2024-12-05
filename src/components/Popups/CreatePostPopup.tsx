@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddMediaLink from "./AddMediaLink";
-import { Post } from "../api";
+import { ApiPost } from "../api";
 
 export interface ICreatePostPopupProps {
   isOpen: boolean;
@@ -22,7 +22,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     }
     const postObject = { content: content, mediaLinks: links };
     console.log(postObject);
-    const response = await Post(postObject, "posts", false);
+    const response = await ApiPost(postObject, "posts");
     if (response.id) {
       console.log(response.id);
     }
