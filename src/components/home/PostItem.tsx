@@ -1,6 +1,6 @@
 import Post from "../../interfaces/Post";
 import MediaLink from "../../interfaces/MediaLink";
-import Reaction from "../../interfaces/Reaction";
+import ReactionContainer from "./ReactionContainer";
 
 export interface IPostItemProps {
 	post: Post;
@@ -20,11 +20,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
                     <p>{medialink.url}</p>
                 </div>
 			))}
-            {post.reactions.map((reaction: Reaction) => (
-				<div>
-                    <p>{reaction.user_id}: {reaction.emoji}</p>
-                </div>
-			))}
+            <ReactionContainer reactions={post.reactions}/>
             <br/>
 		</>
 	);
