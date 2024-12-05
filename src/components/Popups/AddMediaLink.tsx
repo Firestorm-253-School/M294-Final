@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { ApiGet } from "../api";
+
 export interface IAddMediaLinkProps {
   isVisible: boolean;
   cancelFunction: Function;
@@ -6,11 +9,26 @@ export interface IAddMediaLinkProps {
 }
 
 const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
-  const add = (formData: any) => {
-    console.log(formData.link);
-    props.addLink({ url: formData.link, source: props.source });
+  const [searchResults, setSearchResults] = useState([]);
+
+  const add = (url: any) => {
+    console.log(url);
+    props.addLink({ url: url, source: props.source });
     props.cancelFunction();
   };
+
+  const fetchYoutube = async (formData: any) => {
+    const response = await ApiGet(`videos?q=${formData.query}`);
+    console.log(response);
+    setSearchResults(response.videos);
+  };
+
+  const fetchSpotify = async (formData: any) => {
+    const response = await ApiGet(`videos?q=${formData.query}`);
+    console.log(response);
+    setSearchResults(response.videos);
+  };
+
   return (
     <>
       {props.isVisible ? (
@@ -27,14 +45,26 @@ const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
                 data[key] = value;
               });
 
-              add(data);
+              fetchYoutube(data);
             }}
           >
-            <input type="text" name="link" id="link" placeholder="Add Link" />
+            <input type="text" name="query" id="query" placeholder="Search" />
+            <button>Search</button>
+            {searchResults?.map((result: any) => (
+              <>
+                <h4>{result.title}</h4>
+                <button
+                  onClick={() =>
+                    add(`https://youtube.com/watch?v=${result.videoId}`)
+                  }
+                >
+                  Add
+                </button>
+              </>
+            ))}
             <button type="reset" onClick={() => props.cancelFunction()}>
               Cancel
             </button>
-            <button type="submit">Add</button>
           </form>
         </>
       ) : null}
