@@ -1,5 +1,6 @@
-import MediaLink from "../../interfaces/MediaLink";
 import Post from "../../interfaces/Post";
+import MediaLink from "../../interfaces/MediaLink";
+import Reaction from "../../interfaces/Reaction";
 
 export interface IPostItemProps {
 	post: Post;
@@ -13,9 +14,15 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
 			<h3>{post.content}</h3>
 			<p>User: {post.user_id}</p>
 			<p>Created: {post.created_at.toString()}</p>
+			<p>Updated: {post.updated_at.toString()}</p>
 			{post.medialinks.map((medialink: MediaLink) => (
 				<div>
-                    <p>Media Link: {medialink.url}</p>
+                    <p>{medialink.url}</p>
+                </div>
+			))}
+            {post.reactions.map((reaction: Reaction) => (
+				<div>
+                    <p>{reaction.user_id}: {reaction.emoji}</p>
                 </div>
 			))}
             <br/>
