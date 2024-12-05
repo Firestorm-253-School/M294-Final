@@ -22,7 +22,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     }
     const postObject = { content: content, mediaLinks: links };
     console.log(postObject);
-    const response = await Post(postObject, "posts", true);
+    const response = await Post(postObject, "posts", false);
     if (response.id) {
       console.log(response.id);
     }
