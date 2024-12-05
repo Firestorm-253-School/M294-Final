@@ -1,20 +1,30 @@
+import { useState } from "react";
 import { Post } from "../api";
+import { useNavigate } from "react-router";
 
 export interface IRegisterFormProps {}
 
 const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
   const register = async (formData: any) => {
     const response = await Post(formData, "auth/register", true);
     if (response.user) {
       console.log(response.user);
+      //redirect
+      navigate("/login");
     } else {
       console.log(response);
+      setError("Could Not Create User");
     }
   };
 
   return (
     <>
       <h1>Register</h1>
+      {error == "" ? null : <p>{error}</p>}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -22,14 +32,23 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
           const form = e.target as HTMLFormElement;
           const formData = new FormData(form);
 
-          const data: Record<string, any> = {};
-          formData.forEach((value, key) => {
-            if (key != "confirm_password") {
-              data[key] = value;
-            }
-          });
+          console.log(formData);
 
-          register(data);
+          const password = formData.get("password");
+          const confirm_password = formData.get("confirm_password");
+
+          if (password == confirm_password) {
+            const data: Record<string, any> = {};
+            formData.forEach((value, key) => {
+              if (key != "confirm_password") {
+                data[key] = value;
+              }
+            });
+
+            register(data);
+          } else {
+            setError("passwords dont match");
+          }
         }}
       >
         <label htmlFor="username">Username</label>
