@@ -1,8 +1,17 @@
+import { useState } from "react";
+import AddMediaLink from "./AddMediaLink";
+
 export interface ICreatePostPopupProps {
   isOpen: boolean;
 }
 
 const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
+  const [mediaPopupVisible, setMediaPopupVisible] = useState(false);
+
+  const cancel = () => {
+    setMediaPopupVisible(false);
+  };
+
   return (
     <>
       {props.isOpen ? (
@@ -13,6 +22,14 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
             id="content"
             placeholder="write something"
           ></textarea>
+          <button onClick={() => setMediaPopupVisible(true)}>
+            Add YouTube
+          </button>
+          <button>Add Spotify</button>
+          <AddMediaLink
+            isVisible={mediaPopupVisible}
+            cancelFunction={() => cancel()}
+          ></AddMediaLink>
         </div>
       ) : null}
     </>
