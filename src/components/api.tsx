@@ -1,6 +1,6 @@
 const address = "https://react-vid-app.vercel.app/api";
 
-export const Get = async (request: string) => {
+export const ApiGet = async (request: string) => {
   await new Promise((res) => setTimeout(res, 450));
 
   try {
@@ -21,7 +21,7 @@ export const Get = async (request: string) => {
   }
 };
 
-export const Post = async (data: object, request: string, isLogin: boolean) => {
+export const ApiPost = async (data: object, request: string, isLogin: boolean = false) => {
   try {
     const response = await fetch(address + "/" + request, {
       method: "POST",
