@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Post } from "../api";
+import { ApiPost } from "../api";
 import { useNavigate } from "react-router";
 
 export interface IRegisterFormProps {}
@@ -10,7 +10,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
   const navigate = useNavigate();
 
   const register = async (formData: any) => {
-    const response = await Post(formData, "auth/register", true);
+    const response = await ApiPost(formData, "auth/register", true);
     if (response.user) {
       console.log(response.user);
       //redirect
