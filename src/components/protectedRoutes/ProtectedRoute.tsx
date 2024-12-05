@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
 
 export interface IProtectedRouteProps {
   redirectPath: string;
@@ -7,12 +7,15 @@ export interface IProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<IProtectedRouteProps> = (props) => {
-  const navigate = useNavigate();
-  if (localStorage.getItem("auth_token")) {
-    return <>{props.children}</>;
-  } else {
-    navigate(props.redirectPath);
-  }
+  return (
+    <>
+      {localStorage.getItem("auth_token") ? (
+        props.children
+      ) : (
+        <Navigate to={props.redirectPath}></Navigate>
+      )}
+    </>
+  );
 };
 
 export default ProtectedRoute;
