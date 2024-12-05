@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { ApiGet } from "../api";
 import Post from "../../interfaces/Post";
 import MediaLink from "../../interfaces/MediaLink";
-import User from "../../interfaces/User";
+import User, { GetUserById } from "../../interfaces/User";
 import ReactionContainer from "./ReactionContainer";
+import CommentContainer from "./CommentContainer";
 
 export interface IPostItemProps {
 	post: Post;
@@ -18,7 +18,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
     useEffect(() => {
 		(async () => {
 			setLoading(true);
-			setUser(await ApiGet("users/" + post.user_id));
+			setUser(await GetUserById(post.user_id));
 			setLoading(false);
 		})();
 	}, []);
@@ -45,6 +45,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
                 </div>
 			))}
             <ReactionContainer post={post}/>
+			<CommentContainer post={post}/>
             <br/>
 		</>
 	);

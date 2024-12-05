@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { ApiPost, ApiGet } from "../api";
 import Post from "../../interfaces/Post";
