@@ -44,7 +44,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
                     <p>{medialink.url}</p>
                 </div>
 			))}
-            <ReactionContainer reactions={post.reactions}/>
+            <ReactionContainer post={post}/>
             <br/>
 		</>
 	);
