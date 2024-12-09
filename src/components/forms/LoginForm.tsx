@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ApiPost } from "../../components/api";
 import { Navigate, useNavigate } from "react-router";
+import { ApiGet } from "../api";
 
 export interface ILoginFormProps {}
 
@@ -10,12 +11,13 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
   const navigate = useNavigate();
 
   const login = async (formData: any) => {
-    const response = await ApiPost(formData, "auth/login", true);
+    const response_login = await ApiPost(formData, "auth/login", true);
 
-    console.log(response);
-    if (response.token) {
+    if (response_login.token) {
       setIsLoggedIn(true);
-      localStorage.setItem("auth_token", response.token);
+      localStorage.setItem("auth_token", response_login.token);
+      const response_profile = await ApiGet("users/profile");
+      localStorage.setItem("user_id", response_profile.id);
       //redirect
     } else {
       setError(true);
