@@ -10,9 +10,12 @@ const Navbar: React.FC<INavbarProps> = (props) => {
   const navigate = useNavigate();
   return (
     <>
-      <CreatePostPopup closeFunktion={() => setcreatePostPopup (false)} isOpen={createPostPopup}></CreatePostPopup>
+      <CreatePostPopup
+        closeFunktion={() => setcreatePostPopup(false)}
+        isOpen={createPostPopup}
+      ></CreatePostPopup>
 
-      <div className="navbar bg-base-100 w-full">
+      <div className="navbar bg-base-100 w-full fixed z-10">
         <div className="navbar-start">
           <a onClick={() => navigate("/")} className="btn btn-ghost text-xl">
             X Clone
@@ -56,14 +59,19 @@ const Navbar: React.FC<INavbarProps> = (props) => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-24 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-max p-2 shadow"
             >
               <li>
-                <a className="justify-between">Profile</a>
+                <a
+                  onClick={() => navigate("/users")}
+                  className="justify-between"
+                >
+                  User List
+                </a>
               </li>
               <li>
                 <a
-                  className=""
+                  className="hover:text-red-600"
                   onClick={() => {
                     if (logout()) {
                       navigate("/login");
@@ -77,7 +85,6 @@ const Navbar: React.FC<INavbarProps> = (props) => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };
