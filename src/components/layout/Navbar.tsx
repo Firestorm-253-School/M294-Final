@@ -1,10 +1,13 @@
 import { useState } from "react";
 import CreatePostPopup from "../Popups/CreatePostPopup";
+import { logout } from "../forms/logout";
+import { useNavigate } from "react-router";
 
 export interface INavbarProps {}
 
 const Navbar: React.FC<INavbarProps> = (props) => {
   const [createPostPopup, setcreatePostPopup] = useState(false);
+  const navigate = useNavigate();
   return (
     <>
       <CreatePostPopup isOpen={createPostPopup}></CreatePostPopup>
@@ -27,6 +30,15 @@ const Navbar: React.FC<INavbarProps> = (props) => {
             }}
           >
             Create Post
+          </button>
+          <button
+            onClick={() => {
+              if (logout()) {
+                navigate("/login");
+              }
+            }}
+          >
+            Logout
           </button>
           <div>
             <p>*Profilbild*</p>
