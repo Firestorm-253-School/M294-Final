@@ -37,6 +37,7 @@ const Navbar: React.FC<INavbarProps> = (props) => {
             alignItems: "center",
           }}
         >
+          <button onClick={() => window.location.reload()}>Refresh</button>
           <button
             onClick={() => {
               setcreatePostPopup((popup) => !popup);
@@ -44,19 +45,18 @@ const Navbar: React.FC<INavbarProps> = (props) => {
           >
             Create Post
           </button>
-          <button
-            onClick={() => {
-              if (logout()) {
-                navigate("/login");
-              }
-            }}
-          >
-            Logout
-          </button>
           <div>
             <p>*Profilbild*</p>
             <p>Profile</p>
-            <p>Logout</p>
+            <a
+              onClick={() => {
+                if (logout()) {
+                  navigate("/login");
+                }
+              }}
+            >
+              Logout
+            </a>
             {}
           </div>
         </nav>
