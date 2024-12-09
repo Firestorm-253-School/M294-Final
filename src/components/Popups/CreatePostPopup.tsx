@@ -7,10 +7,9 @@ import AddMediaLinkSpotify from "./AddMediaLinkSpotify";
 import { useNavigate } from "react-router";
 
 export interface ICreatePostPopupProps {
-  closeFunktion: Function,
+  closeFunktion: Function;
   isOpen: boolean;
 }
-
 
 const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
   const [mediaPopupVisible, setMediaPopupVisible] = useState(-1);
@@ -62,8 +61,10 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
       {props.isOpen ? (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="card w-96 bg-base-100 shadow-xl p-6">
-            <h1 className="text-2xl font-semibold text-gray-400 mb-4">Create Post</h1>
-  
+            <h1 className="text-2xl font-semibold text-gray-400 mb-4">
+              Create Post
+            </h1>
+
             <textarea
               name="content"
               id="content"
@@ -73,7 +74,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                 setContent(e.target.value);
               }}
             ></textarea>
-  
+
             <div className="space-x-2 mb-4">
               <button
                 onClick={() => {
@@ -92,23 +93,28 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                 Add Spotify
               </button>
             </div>
-  
+
             <AddMediaLinkYoutube
               isVisible={mediaPopupVisible === 0}
               cancelFunction={() => cancel()}
               addLink={(link: any) => addYoutubeLink(link)}
             />
-  
+
             <AddMediaLinkSpotify
               isVisible={mediaPopupVisible === 1}
               cancelFunction={() => cancel()}
               addLink={(link: any) => addSpotifyLink(link)}
             />
-  {/*
+
             <div className="space-y-2 mb-4">
               {youtubeLinks?.map((link, index) => (
-                <div key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded-md">
-                  <h4 className="text-gray-800">{link.source}: {link.url}</h4>
+                <div
+                  key={index}
+                  className="flex justify-between items-center bg-gray-100 p-2 rounded-md"
+                >
+                  <h4 className="text-gray-800">
+                    {link.source}: {link.url}
+                  </h4>
                   <button
                     type="button"
                     onClick={() => removeYoutubeLink(index)}
@@ -119,8 +125,13 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                 </div>
               ))}
               {spotifyLinks?.map((link, index) => (
-                <div key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded-md">
-                  <h4 className="text-gray-800">{link.source}: {link.url}</h4>
+                <div
+                  key={index}
+                  className="flex justify-between items-center bg-gray-100 p-2 rounded-md"
+                >
+                  <h4 className="text-gray-800">
+                    {link.source}: {link.url}
+                  </h4>
                   <button
                     type="button"
                     onClick={() => removeSpotifyLink(index)}
@@ -131,8 +142,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                 </div>
               ))}
             </div>
-            */}
-  
+
             <div className="flex justify-between items-center">
               <button
                 onClick={() => props.closeFunktion()}
@@ -155,7 +165,6 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
       ) : null}
     </>
   );
-  
 };
 
 export default CreatePostPopup;
