@@ -2,12 +2,22 @@ import { useState, useEffect } from "react";
 
 import Post, { GetPosts } from "../../interfaces/Post";
 import PostItem from "./PostItem";
+import EditPostPopup from "../Popups/EditPostPopup";
 
 export interface IPostsContainerProps {}
 
 const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 	const [posts, setPosts] = useState<Record<number, Post>>({});
 	const [isLoading, setLoading] = useState(true);
+	const [editPostPopup, setEditPostPopup] = useState<any>(null);
+
+	const openPopup = (post: Post) => {
+		setEditPostPopup(post);
+	  };
+	
+	  const closePopup = () => {
+		setEditPostPopup(null);
+	  };
 
 	useEffect(() => {
 		(async () => {
@@ -25,6 +35,11 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 	return (
 		<>
 			<h1>Post Container</h1>
+			<EditPostPopup
+        postObject={editPostPopup}
+        isOpen={editPostPopup != null ? true : false}
+        closePostPopup={closePopup}
+      ></EditPostPopup>
 			{Object.values(posts)
 				.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime())
 				.map((post: Post) => (
@@ -42,6 +57,7 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 								delete updated_posts[post.id];
 								setPosts(updated_posts);
 							}}
+							openPopup={openPopup}
 						/>
 					</div>
 				))}
