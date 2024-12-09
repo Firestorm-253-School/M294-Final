@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Post from "../../interfaces/Post";
+import Post, { DeletePost } from "../../interfaces/Post";
 import MediaLink from "../../interfaces/MediaLink";
 import User, { GetUserById } from "../../interfaces/User";
 import ReactionContainer from "./ReactionContainer";
