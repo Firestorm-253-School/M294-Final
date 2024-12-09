@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "../../interfaces/Post";
 import MediaLink from "../../interfaces/MediaLink";
+import { ApiPut } from "../api";
 
 export interface IEditPostPopupProps {
   isOpen: Boolean;
@@ -25,16 +26,7 @@ const EditPostPopup: React.FC<IEditPostPopupProps> = (props) => {
     };
     console.log(newPostObject);
 
-    const response = await fetch(
-      `https://react-vid-app.vercel.app/api/posts/${props.postObject.id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-        },
-        body: JSON.stringify(newPostObject),
-      }
-    );
+    const response = await ApiPut(newPostObject, `posts/${props.postObject.id}`)
     window.location.reload();
     console.log(response);
   };
