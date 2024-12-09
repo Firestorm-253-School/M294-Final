@@ -11,7 +11,14 @@ const Navbar: React.FC<INavbarProps> = (props) => {
   return (
     <>
       <CreatePostPopup isOpen={createPostPopup}></CreatePostPopup>
-      <nav>
+      <nav
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "50px",
+        }}
+      >
         <h1>Logo</h1>
         <form>
           <input
@@ -23,7 +30,13 @@ const Navbar: React.FC<INavbarProps> = (props) => {
           <button>Search</button>
         </form>
 
-        <nav>
+        <nav
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <button
             onClick={() => {
               setcreatePostPopup((popup) => !popup);
