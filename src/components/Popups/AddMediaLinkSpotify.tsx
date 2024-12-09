@@ -5,29 +5,22 @@ export interface IAddMediaLinkProps {
   isVisible: boolean;
   cancelFunction: Function;
   addLink: any;
-  source: String;
 }
 
-const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
+const AddMediaLinkSpotify: React.FC<IAddMediaLinkProps> = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   const add = (url: any) => {
     console.log(url);
-    props.addLink({ url: url, source: props.source });
+    props.addLink({ url: url, source: "Spotify" });
     setSearchResults([]);
     props.cancelFunction();
   };
 
-  const fetchYoutube = async (formData: any) => {
-    const response = await ApiGet(`videos?q=${formData.query}`);
-    console.log(response);
-    setSearchResults(response.videos);
-  };
-
   const fetchSpotify = async (formData: any) => {
-    const response = await ApiGet(`videos?q=${formData.query}`);
+    const response = await ApiGet(`spotify?q=${formData.query}`);
     console.log(response);
-    setSearchResults(response.videos);
+    setSearchResults(response.song.tracks.items);
   };
 
   return (
@@ -46,19 +39,15 @@ const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
                 data[key] = value;
               });
 
-              fetchYoutube(data);
+              fetchSpotify(data);
             }}
           >
             <input type="text" name="query" id="query" placeholder="Search" />
             <button>Search</button>
             {searchResults?.map((result: any) => (
               <>
-                <h4>{result.title}</h4>
-                <button
-                  onClick={() =>
-                    add(`https://youtube.com/watch?v=${result.videoId}`)
-                  }
-                >
+                <h4>{result.name}</h4>
+                <button onClick={() => add(result.external_urls.spotify)}>
                   Add
                 </button>
               </>
@@ -79,4 +68,4 @@ const AddMediaLink: React.FC<IAddMediaLinkProps> = (props) => {
   );
 };
 
-export default AddMediaLink;
+export default AddMediaLinkSpotify;
