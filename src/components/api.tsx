@@ -46,3 +46,22 @@ export const ApiPost = async (
     console.error("Error posting data:", error);
   }
 };
+
+export const ApiDelete = async (request: string) => {
+	try {
+		const response = await fetch(address + "/" + request, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+			}
+		});
+
+		if (!response.ok) {
+			console.error("Network response was not ok");
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error("Error deleting data:", error);
+	}
+};
