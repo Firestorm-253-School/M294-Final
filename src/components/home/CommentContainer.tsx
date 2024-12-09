@@ -30,23 +30,20 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 
   return (
     <>
-      <h3 className="title-highlight">Comments</h3>{" "}
-      {/* Verwendet die 'title-highlight' Klasse */}
+      <h3 className="title-highlight">Comments</h3>
       <CreateCommentForm
         postId={props.post.id}
         createCommentCallback={async () => {
-          //add comment on client side
+          // Add comment on client side
           const comments = await GetComments(post.id);
           setComments(comments);
         }}
       ></CreateCommentForm>
-      <div className="comments-container">
-        {" "}
-        {/* Verwendet die 'comments-container' Klasse */}
+      <div className="space-y-4 mt-6"> {/* Spacing zwischen Kommentaren */}
         {Object.values(comments)
           .sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
           .map((comment: Comment) => (
-            <div key={comment.id}>
+            <div key={comment.id} className="bg-base-200 p-4 rounded-lg shadow">
               <CommentItem
                 comment={comment}
                 callback_remove={() => {
@@ -61,6 +58,7 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
       <br />
     </>
   );
+  
 };
 
 export default CommentContainer;

@@ -34,6 +34,7 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 
 	return (
 		<>
+		
 			<h1>Post Container</h1>
 			<EditPostPopup
 				postObject={editPostPopup}
