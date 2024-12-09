@@ -8,7 +8,10 @@ export default interface User {
 	updated_at: Date;
 }
 
-export async function GetUserById(user_id: number)
-{
-	return await ApiGet("users/" + user_id)
+export async function GetCurrent(): Promise<User | null> {
+	return await ApiGet("users/profile");
+}
+
+export async function GetUserById(user_id: number): Promise<User | null> {
+	return await ApiGet("users/" + user_id);
 }
