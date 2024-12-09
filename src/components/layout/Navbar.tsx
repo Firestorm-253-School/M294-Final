@@ -7,7 +7,8 @@ const Navbar: React.FC<INavbarProps> = (props) => {
   const [createPostPopup, setcreatePostPopup] = useState(false);
   return (
     <>
-      <CreatePostPopup isOpen={createPostPopup}></CreatePostPopup>
+      <CreatePostPopup closeFunktion={() => setcreatePostPopup (false)} isOpen={createPostPopup}></CreatePostPopup>
+
       <nav>
         <h1>Logo</h1>
         <form>
