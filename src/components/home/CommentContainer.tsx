@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Post from "../../interfaces/Post";
 import Comment, { GetComments } from "../../interfaces/Comment";
 import CommentItem from "./CommentItem";
+import CreateCommentForm from "../forms/CreateCommentForm";
 
 export interface ICommentContainerProps {
   post: Post;
@@ -31,6 +32,14 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
     <>
       <h3 className="title-highlight">Comments</h3>{" "}
       {/* Verwendet die 'title-highlight' Klasse */}
+      <CreateCommentForm
+        postId={props.post.id}
+        createCommentCallback={async () => {
+          //add comment on client side
+          const comments = await GetComments(post.id);
+          setComments(comments);
+        }}
+      ></CreateCommentForm>
       <div className="comments-container">
         {" "}
         {/* Verwendet die 'comments-container' Klasse */}

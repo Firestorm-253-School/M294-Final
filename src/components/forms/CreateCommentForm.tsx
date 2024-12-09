@@ -2,6 +2,7 @@ import { ApiPost } from "../api";
 
 export interface ICreateCommentFormProps {
   postId: number;
+  createCommentCallback: Function;
 }
 
 const CreateCommentForm: React.FC<ICreateCommentFormProps> = (props) => {
@@ -10,6 +11,7 @@ const CreateCommentForm: React.FC<ICreateCommentFormProps> = (props) => {
       { content: formData.content },
       `posts/${props.postId}/comments`
     );
+    props.createCommentCallback();
     console.log(response);
   };
   return (
@@ -21,6 +23,8 @@ const CreateCommentForm: React.FC<ICreateCommentFormProps> = (props) => {
           const form = e.target as HTMLFormElement;
           const formData = new FormData(form);
 
+          form.reset();
+
           const data: Record<string, any> = {};
           formData.forEach((value, key) => {
             data[key] = value;
@@ -31,8 +35,8 @@ const CreateCommentForm: React.FC<ICreateCommentFormProps> = (props) => {
       >
         <input
           type="text"
-          name="comment"
-          id="comment"
+          name="content"
+          id="content"
           placeholder="Write A Comment"
         />
         <button className="btn" type="submit">
