@@ -72,15 +72,19 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
 			<div>
 				<ReactionContainer post={post} />
 				<CommentContainer post={post} />
-				<button
-					onClick={() => {
-						DeletePost(post.id);
-						callback_remove();
-					}}
-				>
-					{"(delete post)"}
-				</button>
-				<button onClick={() => openPopup(post)}>Edit</button>
+				{post.user_id == Number(localStorage.getItem("user_id")) && (
+					<button
+						onClick={() => {
+							DeletePost(post.id);
+							callback_remove();
+						}}
+					>
+						Delete
+					</button>
+				)}
+				{post.user_id == Number(localStorage.getItem("user_id")) && (
+					<button onClick={() => openPopup(post)}>Edit</button>
+				)}
 				<br />
 			</div>
 		</div>
