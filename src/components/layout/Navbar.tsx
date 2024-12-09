@@ -55,6 +55,8 @@ const Navbar: React.FC<INavbarProps> = (props) => {
           </button>
           <div>
             <p>*Profilbild*</p>
+            <p>Profile</p>
+            <p>Logout</p>
             {}
           </div>
         </nav>
