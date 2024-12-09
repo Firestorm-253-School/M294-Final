@@ -8,10 +8,11 @@ import CommentContainer from "./CommentContainer";
 
 export interface IPostItemProps {
 	post: Post;
+	callback_remove: () => void;
 }
 
 const PostItem: React.FC<IPostItemProps> = (props) => {
-	const { post } = props;
+	const { post, callback_remove } = props;
 	const [user, setUser] = useState<User | null>(null);
 	const [isLoading, setLoading] = useState(true);
     
@@ -46,6 +47,10 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
 			))}
             <ReactionContainer post={post}/>
 			<CommentContainer post={post}/>
+			<button onClick={() => {
+				DeletePost(post.id);
+				callback_remove();
+			}}>{"(delete post)"}</button>
             <br/>
 		</>
 	);

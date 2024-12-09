@@ -7,7 +7,7 @@ import PostItem from "./PostItem";
 export interface IPostsContainerProps {}
 
 const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
-	const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState<Record<number, Post>>({});
 	const [isLoading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -26,9 +26,24 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 	return (
 		<>
 			<h1>Post Container</h1>
-			{posts.map((post: Post) => (
-				<div>
-					<PostItem post={post} />
+			{Object.values(posts)
+				.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime())
+				.map((post: Post) => (
+					<div key={post.id}>
+						<PostItem
+							post={post}
+							/*callback_update={(updated_post: Post) => {
+								setPosts((prevPosts) => ({
+									...prevPosts,
+									[updated_post.id]: updated_post,
+								}));
+							}}*/
+							callback_remove={() => {
+								const updated_posts = { ...posts };
+								delete updated_posts[post.id];
+								setPosts(updated_posts);
+							}}
+						/>
 				</div>
 			))}
 		</>
