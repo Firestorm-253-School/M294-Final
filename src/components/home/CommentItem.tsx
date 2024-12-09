@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 
-import Comment from "../../interfaces/Comment"
+import Comment, { DeleteComment } from "../../interfaces/Comment"
 import User, { GetUserById } from "../../interfaces/User";
 
 export interface ICommentItemProps
 {
-    comment: Comment
+    comment: Comment;
+	callback_remove: () => void;
 };
 
 const CommentItem: React.FC<ICommentItemProps> = (props) => {
-    const { comment } = props;
+    const { comment, callback_remove } = props;
 
 	const [user, setUser] = useState<User | null>(null);
 	const [isLoading, setLoading] = useState(true);
@@ -29,6 +30,16 @@ const CommentItem: React.FC<ICommentItemProps> = (props) => {
     return (
         <>
             <p>
+				{comment.user_id == Number(localStorage.getItem("user_id")) && (
+					<button
+						onClick={() => {
+							DeleteComment(comment);
+							callback_remove();
+						}}
+					>
+						Delete
+					</button>
+				)}
                 {user?.username}: "{comment.content}"
             </p>
         </>
