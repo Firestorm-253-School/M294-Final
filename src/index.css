@@ -1,68 +1,160 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* --- Allgemeine Styles --- */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    background-color: var(--base-300); /* Theme Hintergrundfarbe */
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Zentrierung von Containern */
+.container-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Inhalte oben beginnen */
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Einheitliche Post-Boxen */
+.post-box {
+    width: 100%;
+    max-width: 600px; /* Einheitliche Breite */
+    min-height: 200px; /* Einheitliche Höhe */
+    margin-bottom: 1.5rem; /* Abstand zwischen Posts */
+    padding: 1.5rem;
+    background-color: var(--base-100);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Schatten für Abhebung */
+    border-radius: 0.75rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Hover-Effekte */
+.post-box:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Hover-Schatten */
+    transform: translateY(-5px); /* Leichtes Anheben */
 }
+
+/* Abstände und Begrenzungen */
+.spacing {
+    margin-bottom: 1.5rem;
+}
+
+.text-small {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+.text-primary {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.text-secondary {
+    color: var(--secondary);
+}
+
+.text-link {
+    color: var(--blue-500);
+    text-decoration: none;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsives Grid für Posts */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamisches Layout */
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* --- Reaktionsbuttons Styling --- */
+.reaction-buttons-container {
+    display: flex;
+    gap: 1rem; /* Abstand zwischen den Buttons */
+    justify-content: center; /* Buttons in der Mitte ausrichten */
+    margin: 1rem 0; /* Abstand oberhalb und unterhalb */
+}
+
+/* Gemeinsame Button-Stile */
+.reaction-button {
+    background-color: var(--base-100);
+    border: 2px solid var(--gray-400);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reaction-button:hover {
+    background-color: var(--primary);
+    color: white;
+    transform: scale(1.05); /* Button leicht vergrößern */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten bei Hover */
+}
+
+.reaction-button:active {
+    transform: scale(1); /* Button beim Klicken zurücksetzen */
+}
+
+/* Spezifische Stile für Daumen hoch und Daumen runter */
+.thumbs-up {
+    background-color: var(--green-500);
+    border-color: var(--green-600);
+}
+
+.thumbs-down {
+    background-color: var(--red-500);
+    border-color: var(--red-600);
+}
+
+/* --- Titel-Highlight --- */
+.title-highlight {
+    font-size: 1.25rem; /* Größerer Titel */
+    font-weight: bold;  /* Fettgedruckt */
+    color: var(--primary); /* Primäre Farbe für den Titel */
+    text-transform: uppercase; /* Alle Buchstaben in Großbuchstaben */
+    letter-spacing: 1px; /* Leicht erhöhte Buchstabenabstände */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Schattierung für den Titel */
+    text-align: center; /* Titel zentrieren */
+}
+
+/* --- Kommentarbox Container --- */
+.comments-container {
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.comment-item-container {
+    padding: 1rem;
+    background-color: #000129; /* Hintergrundfarbe */
+    border-radius: 0.75rem; /* Abgerundete Ecken */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Schatten für Trennung */
+    transition: box-shadow 0.3s ease; /* Sanfter Übergang beim Hover */
+}
+
+.comment-item-container:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Effekt beim Hover */
+}
+
+/* --- Weitere Verbesserungen --- */
+h1, h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+

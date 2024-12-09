@@ -40,6 +40,7 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
         isOpen={editPostPopup != null ? true : false}
         closePostPopup={closePopup}
       ></EditPostPopup>
+	  <div className="container-center">
 			{Object.values(posts)
 				.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime())
 				.map((post: Post) => (
@@ -60,7 +61,9 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 							openPopup={openPopup}
 						/>
 					</div>
+					
 				))}
+				</div>
 		</>
 	);
 };

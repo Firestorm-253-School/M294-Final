@@ -30,15 +30,20 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 
 	return (
 		<>
-			<h3>Comments</h3>
+		  <h3 className="title-highlight">Comments</h3> {/* Verwendet die 'title-highlight' Klasse */}
+		  <div className="comments-container"> {/* Verwendet die 'comments-container' Klasse */}
 			{comments.map((comment: Comment) => (
 				<div key={comment.id}>
 					<CommentItem comment={comment} />
 				</div>
 			))}
-			<br />
+		  </div>
+		  <br />
 		</>
-	);
+	  );
+	  
+	  
+	  
 };
 
 export default CommentContainer;
