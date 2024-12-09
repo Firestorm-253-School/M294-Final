@@ -23,11 +23,24 @@ const ReactionContainer: React.FC<IReactionContainerProps> = (props) => {
 
 	return (
 		<>
-			<button onClick={() => handleClick("👍")}>👍 {thumbs_up}</button>
-			<button onClick={() => handleClick("👎")}>👎 {thumbs_down}</button>
-			<br />
+		  <div className="reaction-buttons-container">
+			<button 
+			  onClick={() => handleClick("👍")} 
+			  className="reaction-button thumbs-up"
+			>
+			  👍 {thumbs_up}
+			</button>
+			<button 
+			  onClick={() => handleClick("👎")} 
+			  className="reaction-button thumbs-down"
+			>
+			  👎 {thumbs_down}
+			</button>
+		  </div>
+		  <br />
 		</>
-	);
+	  );
+	  
 };
 
 function get_likes(reactions: Reaction[]) {
