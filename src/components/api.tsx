@@ -19,18 +19,23 @@ export const ApiGet = async (request: string) => {
   }
 };
 
-export const ApiPost = async (data: object, request: string, isLogin: boolean = false) => {
+export const ApiPost = async (
+	data: object,
+	request: string,
+	isLogin: boolean = false
+) => {
   try {
     const response = await fetch(address + "/" + request, {
       method: "POST",
       headers: isLogin
         ? {}
         : {
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+						Authorization: `Bearer ${localStorage.getItem(
+							"auth_token"
+						)}`,
         },
       body: JSON.stringify(data),
     });
-
 
     if (!response.ok) {
       console.error("Network response was not ok");
