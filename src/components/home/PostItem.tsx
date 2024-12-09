@@ -54,7 +54,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
 			>
 				{"(delete post)"}
 			</button>
-			<button onClick={() => props.openPopup(post)}>Edit</button>
+			<button onClick={() => openPopup(post)}>Edit</button>
 			<br />
 		</>
 	);
