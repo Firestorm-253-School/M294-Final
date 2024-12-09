@@ -1,22 +1,25 @@
 //!!!!IMPLEMENT ERROR HANDLING!!!!!
-//AND SPOTIFY!!!
 
 import { useState } from "react";
-import AddMediaLink from "./AddMediaLink";
 import { ApiPost } from "../api";
+import AddMediaLinkYoutube from "./AddMediaLinkYoutube";
+import AddMediaLinkSpotify from "./AddMediaLinkSpotify";
+import { useNavigate } from "react-router";
 
 export interface ICreatePostPopupProps {
   isOpen: boolean;
 }
 
 const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
-  const [mediaPopupVisible, setMediaPopupVisible] = useState(false);
-  const [links, setLinks] = useState<any[]>();
+  const [mediaPopupVisible, setMediaPopupVisible] = useState(-1);
+  const [youtubeLinks, setYoutubeLinks] = useState<any[]>();
+  const [spotifyLinks, setSpotifyLinks] = useState<any[]>();
   const [content, setContent] = useState("");
-  const [source, setSource] = useState("");
+
+  const navigate = useNavigate();
 
   const cancel = () => {
-    setMediaPopupVisible(false);
+    setMediaPopupVisible(-1);
   };
 
   const createPost = async (links: any, content: any) => {
@@ -31,9 +34,19 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     }
   };
 
-  const addLink = (link: string) => {
+  const addYoutubeLink = (link: string) => {
     console.log(link);
-    setLinks((prevLinks) => {
+    setYoutubeLinks((prevLinks) => {
+      if (prevLinks) {
+        return [...prevLinks, link];
+      } else {
+        return [link];
+      }
+    });
+  };
+  const addSpotifyLink = (link: string) => {
+    console.log(link);
+    setSpotifyLinks((prevLinks) => {
       if (prevLinks) {
         return [...prevLinks, link];
       } else {
@@ -57,32 +70,52 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
           ></textarea>
           <button
             onClick={() => {
-              setMediaPopupVisible(true);
-              setSource("youtube");
+              setMediaPopupVisible(0);
             }}
           >
             Add YouTube
           </button>
           <button
             onClick={() => {
-              setMediaPopupVisible(true);
-              setSource("spotify");
+              setMediaPopupVisible(1);
             }}
           >
             Add Spotify
           </button>
-          <AddMediaLink
-            isVisible={mediaPopupVisible}
+          <AddMediaLinkYoutube
+            isVisible={mediaPopupVisible == 0 ? true : false}
             cancelFunction={() => cancel()}
-            addLink={(link: any) => addLink(link)}
-            source={source}
-          ></AddMediaLink>
-          {links?.map((link) => (
-            <h4 className="link">
-              {link.source}: {link.url}
-            </h4>
-          ))}
-          <button onClick={() => createPost(links, content)}>Post</button>
+            addLink={(link: any) => addYoutubeLink(link)}
+          ></AddMediaLinkYoutube>
+          <AddMediaLinkSpotify
+            isVisible={mediaPopupVisible == 1 ? true : false}
+            cancelFunction={() => cancel()}
+            addLink={(link: any) => addSpotifyLink(link)}
+          ></AddMediaLinkSpotify>
+          <div>
+            {youtubeLinks?.map((link) => (
+              <div>
+                <h4 className="link">
+                  {link.source}: {link.url}
+                </h4>
+              </div>
+            ))}
+          </div>
+          <div>
+            {spotifyLinks?.map((link) => (
+              <h4 className="link">
+                {link.source}: {link.url}
+              </h4>
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              createPost(youtubeLinks?.concat(spotifyLinks), content);
+              navigate("/");
+            }}
+          >
+            Post
+          </button>
         </div>
       ) : null}
     </>

@@ -33,9 +33,9 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 		  <h3 className="title-highlight">Comments</h3> {/* Verwendet die 'title-highlight' Klasse */}
 		  <div className="comments-container"> {/* Verwendet die 'comments-container' Klasse */}
 			{comments.map((comment: Comment) => (
-			  <div key={comment.id} className="comment-item-container"> {/* Nutzt die 'comment-item-container' Klasse */}
-				<CommentItem comment={comment} />
-			  </div>
+				<div key={comment.id}>
+					<CommentItem comment={comment} />
+				</div>
 			))}
 		  </div>
 		  <br />
