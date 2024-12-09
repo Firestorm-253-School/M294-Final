@@ -53,7 +53,7 @@ export const ApiDelete = async (request: string) => {
 			method: "DELETE",
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-			}
+			},
 		});
 
 		if (!response.ok) {
@@ -63,5 +63,25 @@ export const ApiDelete = async (request: string) => {
 		return await response.json();
 	} catch (error) {
 		console.error("Error deleting data:", error);
+	}
+};
+
+export const ApiPut = async (data: object, request: string) => {
+	try {
+		const response = await fetch(address + "/" + request, {
+			method: "PUT",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			console.error("Network response was not ok");
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error("Error updating data:", error);
 	}
 };
