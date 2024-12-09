@@ -104,7 +104,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
               cancelFunction={() => cancel()}
               addLink={(link: any) => addSpotifyLink(link)}
             />
-  
+  {/*
             <div className="space-y-2 mb-4">
               {youtubeLinks?.map((link, index) => (
                 <div key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded-md">
@@ -131,6 +131,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                 </div>
               ))}
             </div>
+            */}
   
             <div className="flex justify-between items-center">
               <button
