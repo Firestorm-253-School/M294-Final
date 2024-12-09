@@ -7,48 +7,48 @@ import ReactionContainer from "./ReactionContainer";
 import CommentContainer from "./CommentContainer";
 
 export interface IPostItemProps {
-	post: Post;
+  post: Post;
+  openPopup: Function;
 }
 
 const PostItem: React.FC<IPostItemProps> = (props) => {
-	const { post } = props;
-	const [user, setUser] = useState<User | null>(null);
-	const [isLoading, setLoading] = useState(true);
-    
-    useEffect(() => {
-		(async () => {
-			setLoading(true);
-			setUser(await GetUserById(post.user_id));
-			setLoading(false);
-		})();
-	}, []);
+  const { post } = props;
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setLoading] = useState(true);
 
-    
-	if (isLoading) {
-		return <h1>Loading...</h1>;
-	}
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      setUser(await GetUserById(post.user_id));
+      setLoading(false);
+    })();
+  }, []);
 
-    if (user == null)
-    {
-		return <h1>No user found</h1>;
-    }
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
-	return (
-		<>
-			<h3>{post.content}</h3>
-			<p>User: {user.username}</p>
-			<p>Created: {post.created_at.toString()}</p>
-			<p>Updated: {post.updated_at.toString()}</p>
-			{post.medialinks.map((medialink: MediaLink) => (
-				<div>
-                    <p>{medialink.url}</p>
-                </div>
-			))}
-            <ReactionContainer post={post}/>
-			<CommentContainer post={post}/>
-            <br/>
-		</>
-	);
+  if (user == null) {
+    return <h1>No user found</h1>;
+  }
+
+  return (
+    <>
+      <h3>{post.content}</h3>
+      <p>User: {user.username}</p>
+      <p>Created: {post.created_at.toString()}</p>
+      <p>Updated: {post.updated_at.toString()}</p>
+      {post.medialinks.map((medialink: MediaLink) => (
+        <div>
+          <p>{medialink.url}</p>
+        </div>
+      ))}
+      <button onClick={() => props.openPopup(props.post)}>Edit</button>
+      <ReactionContainer post={post} />
+      <CommentContainer post={post} />
+      <br />
+    </>
+  );
 };
 
 export default PostItem;
