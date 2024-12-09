@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { ApiPost, ApiGet } from "../api";
 import Post from "../../interfaces/Post";
-import Comment from "../../interfaces/Comment";
+import Comment, { GetComments } from "../../interfaces/Comment";
 import CommentItem from "./CommentItem";
 
 export interface ICommentContainerProps {
@@ -12,13 +11,13 @@ export interface ICommentContainerProps {
 const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 	const { post } = props;
 
+	const [comments, setComments] = useState<Record<number, Comment>>({});
 	const [isLoading, setLoading] = useState(true);
-	const [comments, setComments] = useState<Comment[]>([]);
 
 	useEffect(() => {
 		(async () => {
 			setLoading(true);
-            const comments = await ApiGet(`posts/${post.id}/comments`)
+			const comments = await GetComments(post.id);
 			setComments(comments);
 			setLoading(false);
 		})();
@@ -30,20 +29,32 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 
 	return (
 		<>
-		  <h3 className="title-highlight">Comments</h3> {/* Verwendet die 'title-highlight' Klasse */}
-		  <div className="comments-container"> {/* Verwendet die 'comments-container' Klasse */}
-			{comments.map((comment: Comment) => (
-				<div key={comment.id}>
-					<CommentItem comment={comment} />
-				</div>
-			))}
-		  </div>
-		  <br />
+			<h3 className="title-highlight">Comments</h3>{" "}
+			{/* Verwendet die 'title-highlight' Klasse */}
+			<div className="comments-container">
+				{" "}
+				{/* Verwendet die 'comments-container' Klasse */}
+				{Object.values(comments)
+					.sort(
+						(a, b) =>
+							b.created_at.getTime() - a.created_at.getTime()
+					)
+					.map((comment: Comment) => (
+						<div key={comment.id}>
+							<CommentItem
+								comment={comment}
+								callback_remove={() => {
+									const updated_comments = { ...comments };
+									delete updated_comments[comment.id];
+									setComments(updated_comments);
+								}}
+							/>
+						</div>
+					))}
+			</div>
+			<br />
 		</>
-	  );
-	  
-	  
-	  
+	);
 };
 
 export default CommentContainer;
