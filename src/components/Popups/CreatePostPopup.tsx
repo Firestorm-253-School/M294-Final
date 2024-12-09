@@ -1,5 +1,4 @@
 //!!!!IMPLEMENT ERROR HANDLING!!!!!
-//AND SPOTIFY!!!
 
 import { useState } from "react";
 import { ApiPost } from "../api";

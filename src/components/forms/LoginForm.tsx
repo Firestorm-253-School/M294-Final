@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ApiPost } from "../../components/api";
+import { Navigate } from "react-router";
 
 export interface ILoginFormProps {}
 
@@ -22,7 +23,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
   return (
     <>
       <h1>Login</h1>
-      {error ? <p>Username and Password combination doesn't match!</p> : null}
+      {error ? <p>Invalid Username and Password combination</p> : null}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -45,6 +46,9 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
           id="username"
           placeholder="Your Username"
           required
+          onChange={() => {
+            setError(false);
+          }}
         />
         <label htmlFor="password">Passwort</label>
         <input
@@ -53,10 +57,13 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
           id="password"
           placeholder="Your Password"
           required
+          onChange={() => {
+            setError(false);
+          }}
         />
         <button>Login</button>
       </form>
-      {isLoggedIn ? <p>Success</p> : null}
+      {isLoggedIn ? <Navigate to={"/"}></Navigate> : null}
     </>
   );
 };
