@@ -117,7 +117,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => removeYoutubeLink(index)}
+                    onClick={() => console.log("Coming soon")}
                     className="btn btn-sm btn-error"
                   >
                     Remove
@@ -134,7 +134,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => removeSpotifyLink(index)}
+                    onClick={() => console.log("coming soon")}
                     className="btn btn-sm btn-error"
                   >
                     Remove
@@ -153,6 +153,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
               <button
                 onClick={() => {
                   createPost(youtubeLinks?.concat(spotifyLinks), content);
+                  window.location.reload();
                   navigate("/");
                 }}
                 className="btn btn-primary"
