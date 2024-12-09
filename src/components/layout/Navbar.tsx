@@ -10,7 +10,8 @@ const Navbar: React.FC<INavbarProps> = (props) => {
   const navigate = useNavigate();
   return (
     <>
-      <CreatePostPopup isOpen={createPostPopup}></CreatePostPopup>
+      <CreatePostPopup closeFunktion={() => setcreatePostPopup (false)} isOpen={createPostPopup}></CreatePostPopup>
+
       <div className="navbar bg-base-100 w-full">
         <div className="navbar-start">
           <a onClick={() => navigate("/")} className="btn btn-ghost text-xl">
@@ -76,6 +77,7 @@ const Navbar: React.FC<INavbarProps> = (props) => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };

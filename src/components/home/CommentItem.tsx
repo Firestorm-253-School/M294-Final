@@ -28,22 +28,23 @@ const CommentItem: React.FC<ICommentItemProps> = (props) => {
 	}
 
     return (
-        <>
-            <p>
+		<>
+			<span className="font-semibold">{user?.username}:</span> "{comment.content}"
+			<p className="text-sm flex justify-between items-center">
 				{comment.user_id == Number(localStorage.getItem("user_id")) && (
 					<button
 						onClick={() => {
 							DeleteComment(comment);
 							callback_remove();
 						}}
+						className="btn btn-danger btn-sm ml-auto"
 					>
 						Delete
 					</button>
 				)}
-                {user?.username}: "{comment.content}"
-            </p>
-        </>
-    );
+			</p>
+		</>
+	);
 };
 
 export default CommentItem
