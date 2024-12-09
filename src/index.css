@@ -24,11 +24,12 @@ body {
 /* Einheitliche Post-Boxen */
 .post-box {
     width: 100%;
-    max-width: 600px; /* Einheitliche Breite */
+    max-width: 600px!important;/* Einheitliche Breite */
+    min-width: 600px!important; /* Einheitliche Breite */
     min-height: 200px; /* Einheitliche Höhe */
     margin-bottom: 1.5rem; /* Abstand zwischen Posts */
     padding: 1.5rem;
-    background-color: var(--base-100);
+    background-color: rgb(30 41 59)!important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Schatten für Abhebung */
     border-radius: 0.75rem;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -126,7 +127,7 @@ body {
     color: var(--primary); /* Primäre Farbe für den Titel */
     text-transform: uppercase; /* Alle Buchstaben in Großbuchstaben */
     letter-spacing: 1px; /* Leicht erhöhte Buchstabenabstände */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Schattierung für den Titel */
+    /*box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Schattierung für den Titel */
     text-align: center; /* Titel zentrieren */
 }
 

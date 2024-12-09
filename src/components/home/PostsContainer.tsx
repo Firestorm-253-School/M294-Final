@@ -72,12 +72,6 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
             <div key={post.id}>
               <PostItem
                 post={post}
-                /*callback_update={(updated_post: Post) => {
-									setPosts((prevPosts) => ({
-										...prevPosts,
-										[updated_post.id]: updated_post,
-									}));
-								}}*/
                 callback_remove={() => {
                   const updated_posts = { ...posts };
                   delete updated_posts[post.id];

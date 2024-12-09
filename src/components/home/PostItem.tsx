@@ -35,7 +35,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
   }
 
   return (
-    <div className="post-box">
+    <div className="post-box ">
       <h3 className="text-xl text-primary spacing">{post.content}</h3>
       <div className="text-small spacing">
         <p className="text-small text-right">
@@ -79,7 +79,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
               DeletePost(post.id);
               callback_remove();
             }}
-            className="btn btn-danger btn-sm mr-2"
+            className="btn btn-accent btn-sm mr-2"
           >
             Delete
           </button>
@@ -87,7 +87,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
         {post.user_id == Number(localStorage.getItem("user_id")) && (
           <button
             onClick={() => openPopup(post)}
-            className="btn btn-primary btn-sm"
+            className="btn btn-accent btn-sm"
           >
             Edit
           </button>
