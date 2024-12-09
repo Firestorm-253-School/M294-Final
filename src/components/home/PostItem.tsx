@@ -10,6 +10,7 @@ export interface IPostItemProps {
   post: Post;
   callback_remove: () => void;
   openPopup: (post: Post) => void;
+  openIframe: (source: string, videoId: string) => void;
 }
 
 const PostItem: React.FC<IPostItemProps> = (props) => {
@@ -56,10 +57,11 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
             {post.medialinks.map((medialink: MediaLink, index) => (
               <li key={index}>
                 <a
-                  href={medialink.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-link"
+                  className="hover:underline cursor-pointer"
+                  onClick={() => {
+                    console.log("test");
+                    props.openIframe(medialink.source, medialink.url);
+                  }}
                 >
                   {medialink.url}
                 </a>
