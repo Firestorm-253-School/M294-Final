@@ -13,7 +13,9 @@ const Navbar: React.FC<INavbarProps> = (props) => {
       <CreatePostPopup isOpen={createPostPopup}></CreatePostPopup>
       <div className="navbar bg-base-100 w-full">
         <div className="navbar-start">
-          <a className="btn btn-ghost text-xl">X Clone</a>
+          <a onClick={() => navigate("/")} className="btn btn-ghost text-xl">
+            X Clone
+          </a>
         </div>
         <div className="form-control navbar-center">
           <input
