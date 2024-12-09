@@ -37,52 +37,71 @@ const EditPostPopup: React.FC<IEditPostPopupProps> = (props) => {
   return (
     <>
       {props.isOpen ? (
-        <div>
-          <h2>Edit Post</h2>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="card w-96 bg-base-100 shadow-2xl rounded-lg p-6">
+            <div className="card-body">
+              <h2 className="text-2xl font-semibold text-primary mb-4">Edit Post</h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-              const form = e.target as HTMLFormElement;
-              const formData = new FormData(form);
+                  const form = e.target as HTMLFormElement;
+                  const formData = new FormData(form);
 
-              const data: Record<string, any> = {};
-              formData.forEach((value, key) => {
-                data[key] = value;
-              });
+                  const data: Record<string, any> = {};
+                  formData.forEach((value, key) => {
+                    data[key] = value;
+                  });
 
-              editPost(data, mediaLinks);
-            }}
-          >
-            <textarea
-              name="content"
-              id="content"
-              defaultValue={props.postObject.content}
-            ></textarea>
-
-            {mediaLinks?.map((link, index) => {
-              return (
+                  editPost(data, mediaLinks);
+                }}
+                className="space-y-4"
+              >
                 <div>
-                  <h4>
-                    {link.source}: {link.url}
-                  </h4>
-                  <input
-                    type="hidden"
-                    name="mediaLinks"
-                    id="mediaLinks"
-                    value={JSON.stringify(link)}
-                  />
-                  <button type="button" onClick={() => removeLink(index)}>
-                    Remove
+                  <label htmlFor="content" className="label">
+                    <span className="label-text">Content</span>
+                  </label>
+                  <textarea
+                    name="content"
+                    id="content"
+                    defaultValue={props.postObject.content}
+                    className="textarea textarea-bordered w-full h-32"
+                    required
+                  ></textarea>
+                </div>
+
+                {mediaLinks?.map((link, index) => {
+                  return (
+                    <div key={index} className="flex items-center justify-between mb-4">
+                      <h4 className="text-lg">
+                        {link.source}: {link.url}
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => removeLink(index)}
+                        className="btn btn-sm btn-error"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  );
+                })}
+
+                <div className="flex justify-between">
+                  <button
+                    type="reset"
+                    onClick={() => props.closePostPopup()}
+                    className="btn btn-ghost"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Save
                   </button>
                 </div>
-              );
-            })}
-            <button type="reset" onClick={() => props.closePostPopup()}>
-              Cancel
-            </button>
-            <button type="submit">Save</button>
-          </form>
+              </form>
+            </div>
+          </div>
         </div>
       ) : null}
     </>
