@@ -32,7 +32,7 @@ const CommentContainer: React.FC<ICommentContainerProps> = (props) => {
 		<>
 			<h3>Comments</h3>
 			{comments.map((comment: Comment) => (
-				<div>
+				<div key={comment.id}>
 					<CommentItem comment={comment} />
 				</div>
 			))}

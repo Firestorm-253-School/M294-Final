@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { ApiGet } from "../api";
-import Post from "../../interfaces/Post";
+import Post, { GetPosts } from "../../interfaces/Post";
 import PostItem from "./PostItem";
 
 export interface IPostsContainerProps {}
@@ -13,14 +12,14 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 	useEffect(() => {
 		(async () => {
 			setLoading(true);
-			const posts = await ApiGet("posts");
+			const posts = await GetPosts();
 			setPosts(posts);
 			setLoading(false);
 		})();
 	}, []);
 
 	if (isLoading) {
-		<h1>Loading...</h1>;
+		return <h1>Loading...</h1>;
 	}
 
 	return (
@@ -44,8 +43,8 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 								setPosts(updated_posts);
 							}}
 						/>
-				</div>
-			))}
+					</div>
+				))}
 		</>
 	);
 };

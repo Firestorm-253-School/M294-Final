@@ -41,7 +41,7 @@ const PostItem: React.FC<IPostItemProps> = (props) => {
 			<p>Created: {post.created_at.toString()}</p>
 			<p>Updated: {post.updated_at.toString()}</p>
 			{post.medialinks.map((medialink: MediaLink) => (
-				<div>
+				<div key={medialink.id}>
                     <p>{medialink.url}</p>
                 </div>
 			))}
