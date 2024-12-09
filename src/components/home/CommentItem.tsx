@@ -37,7 +37,7 @@ const CommentItem: React.FC<ICommentItemProps> = (props) => {
 							DeleteComment(comment);
 							callback_remove();
 						}}
-						className="btn btn-danger btn-sm ml-auto"
+						className="btn btn-primary btn-sm ml-auto"
 					>
 						Delete
 					</button>
