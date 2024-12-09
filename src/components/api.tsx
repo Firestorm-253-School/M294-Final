@@ -50,7 +50,7 @@ export const ApiPost = async (
 export const ApiDelete = async (request: string) => {
 	try {
 		const response = await fetch(address + "/" + request, {
-			method: "GET",
+			method: "DELETE",
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
 			}
