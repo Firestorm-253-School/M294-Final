@@ -28,7 +28,9 @@ const AddMediaLinkSpotify: React.FC<IAddMediaLinkProps> = (props) => {
       {props.isVisible && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="card w-96 bg-base-100 shadow-lg rounded-xl p-6">
-            <h3 className="text-2xl font-bold text-center mb-4">Add Spotify Link</h3>
+            <h3 className="text-2xl font-bold text-center mb-4">
+              Add Spotify Link
+            </h3>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -63,9 +65,9 @@ const AddMediaLinkSpotify: React.FC<IAddMediaLinkProps> = (props) => {
                 >
                   <h4 className="text-sm font-medium">{result.name}</h4>
                   <button
-                    onClick={() =>
-                      add(result.external_urls.spotify)
-                    }
+                    onClick={() => {
+                      add(result.external_urls.spotify);
+                    }}
                     className="btn btn-success btn-sm"
                   >
                     Add

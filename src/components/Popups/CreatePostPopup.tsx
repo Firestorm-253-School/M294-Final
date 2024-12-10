@@ -30,6 +30,8 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     const postObject = { content: content, mediaLinks: links };
     console.log(postObject);
     const response = await ApiPost(postObject, "posts");
+    window.location.reload();
+    navigate("/");
     if (response.id) {
       console.log(response.id);
     }
@@ -152,9 +154,12 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
               </button>
               <button
                 onClick={() => {
-                  createPost(youtubeLinks?.concat(spotifyLinks), content);
-                  window.location.reload();
-                  navigate("/");
+                  console.log(youtubeLinks, spotifyLinks);
+
+                  createPost(
+                    (youtubeLinks ?? []).concat(spotifyLinks ?? []),
+                    content
+                  );
                 }}
                 className="btn btn-primary"
               >
