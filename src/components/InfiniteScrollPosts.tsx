@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { GetPosts } from '../../interfaces/Post';
-import PostItem from './PostItem';
-import EditPostPopup from '../Popups/EditPostPopup';
+import { GetPosts } from '../interfaces/Post';
+import PostItem from './home/PostItem';
 
-export interface IPostsContainerProps {};
-
-const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
-  // const [isLoading, setLoading] = useState(true);
-  // const [editPostPopup, setEditPostPopup] = useState<any>(null);
+const InfiniteScrollPosts: React.FC = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
@@ -19,13 +14,12 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
 
   const fetchMoreData = async () => {
     const response = await GetPosts(page);
-    if (response.page >= response.totalPages) {
+    if (response.length === 0) {
       setHasMore(false);
-    } else {
-      setPosts((prevPosts) => [...prevPosts, ...response.results]);
-      setPage(page + 1);
+      return;
     }
-    console.log(response);
+    setPosts([...posts, ...response]);
+    setPage(page + 1);
   };
 
   return (
@@ -41,10 +35,17 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
       }
     >
       {posts.map((post, index) => (
-        <PostItem key={index} post={post} />
+       <PostItem
+       post={post}
+       callback_remove={() => {
+         const updated_posts = { ...posts };
+         delete updated_posts[post.id];
+         setPosts(updated_posts);
+       }}
+     />
       ))}
     </InfiniteScroll>
   );
 };
 
-export default PostsContainer;
+export default InfiniteScrollPosts;
