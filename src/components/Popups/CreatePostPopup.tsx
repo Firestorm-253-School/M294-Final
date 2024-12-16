@@ -18,7 +18,6 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
   const [content, setContent] = useState("");
 
   const navigate = useNavigate();
-
   const cancel = () => {
     setMediaPopupVisible(-1);
   };
@@ -27,7 +26,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     if (links == undefined) {
       links = [];
     }
-    const postObject = { content: content, mediaLinks: links };
+    const postObject = { content: content, medialinks: links };
     console.log(postObject);
     const response = await ApiPost(postObject, "posts");
     window.location.reload();
