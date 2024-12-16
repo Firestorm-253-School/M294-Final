@@ -11,8 +11,8 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
 
   const register = async (formData: any) => {
     const response = await ApiPost(formData, "auth/register", true);
-    if (response.user) {
-      console.log(response.user);
+    if (response.status == "success") {
+      console.log(response);
       //redirect
       navigate("/login");
     } else {
@@ -29,22 +29,20 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
             Register
           </h1>
           {error && (
-            <p className="text-red-500 text-sm mb-4 text-center">
-              {error}
-            </p>
+            <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
           )}
           <form
             onSubmit={(e) => {
               e.preventDefault();
-  
+
               const form = e.target as HTMLFormElement;
               const formData = new FormData(form);
-  
+
               console.log(formData);
-  
+
               const password = formData.get("password");
               const confirm_password = formData.get("confirm_password");
-  
+
               if (password === confirm_password) {
                 const data: Record<string, any> = {};
                 formData.forEach((value, key) => {
@@ -52,7 +50,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
                     data[key] = value;
                   }
                 });
-  
+
                 register(data);
               } else {
                 setError("Passwords don't match");
@@ -74,6 +72,19 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
               />
             </div>
             <div>
+              <label htmlFor="displayName" className="label">
+                <span className="label-text">Display Name</span>
+              </label>
+              <input
+                type="text"
+                name="displayName"
+                id="displayName"
+                placeholder="Your Display Name"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div>
               <label htmlFor="email" className="label">
                 <span className="label-text">Email</span>
               </label>
@@ -82,6 +93,19 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
                 name="email"
                 id="email"
                 placeholder="Your Email"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="birthDate" className="label">
+                <span className="label-text">Birthdate</span>
+              </label>
+              <input
+                type="date"
+                name="birthDate"
+                id="birthDate"
+                placeholder="Your Display Name"
                 className="input input-bordered w-full"
                 required
               />
@@ -118,7 +142,6 @@ const RegisterForm: React.FC<IRegisterFormProps> = (props) => {
       </div>
     </div>
   );
-  
 };
 
 export default RegisterForm;
