@@ -2,27 +2,32 @@ import Reaction from "./Reaction";
 import MediaLink from "./MediaLink";
 import { ApiDelete, ApiGet } from "../components/api";
 
-export default interface Post {
-  id: number;
-  user_id: number;
-  content: string;
-  created_at: Date;
-  updated_at: Date;
-  medialinks: MediaLink[];
-  reactions: Reaction[];
+export interface PostReactions {
+  type: string;
+  count: number;
 }
 
-export async function GetPosts() {
-  const response = await ApiGet("posts/page/0");
-  const posts: Post[] = await response.response;
+export interface Post {
+  id: number;
+  content: string;
+  user: {
+    username: string;
+  };
+  created_at: string;
+  updated_at: string;
+  medialinks?: MediaLink[];
+  reactions?: PostReactions[];
+}
 
-  const dict: Record<number, Post> = posts.reduce((array: any, post: Post) => {
-    post.created_at = new Date(post.created_at);
-    post.updated_at = new Date(post.updated_at);
-    array[post.id] = post;
-    return array;
-  }, {});
-  return dict;
+export async function GetPosts(page: number = 0) {
+  const response = await ApiGet(`posts/page/${page}`);
+  const posts: any = await response.response;
+
+  // const dict: Record<number, Post> = posts.reduce((array: any, post: Post) => {
+  //   array[post.id] = post;
+  //   return array;
+  // }, {});
+  return posts
 }
 
 export async function GetPostById(post_id: number) {
