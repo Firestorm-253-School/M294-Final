@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { GetPosts } from '../../interfaces/Post';
-import PostItem from './PostItem';
-import EditPostPopup from '../Popups/EditPostPopup';
+import React, { useState, useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { GetPosts } from "../../interfaces/Post";
+import PostItem from "./PostItem";
 
-export interface IPostsContainerProps {};
+export interface IPostsContainerProps {}
 
 const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
   // const [isLoading, setLoading] = useState(true);
@@ -35,7 +34,7 @@ const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
       hasMore={hasMore}
       loader={<h4>Loading...</h4>}
       endMessage={
-        <p style={{ textAlign: 'center' }}>
+        <p style={{ textAlign: "center" }}>
           <b>Yay! You have seen it all</b>
         </p>
       }
