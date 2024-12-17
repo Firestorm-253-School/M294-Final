@@ -8,7 +8,7 @@ export interface PostReactions {
 }
 
 export interface Post {
-  id: number;
+  postId: number;
   content: string;
   user: {
     username: string;
