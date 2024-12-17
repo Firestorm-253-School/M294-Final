@@ -16,7 +16,9 @@ export interface Post {
   created_at: string;
   updated_at: string;
   medialinks?: MediaLink[];
-  reactions?: PostReactions[];
+  likes: number;
+  dislikes: number;
+  rating: number;
 }
 
 export async function GetPosts(page: number = 0) {

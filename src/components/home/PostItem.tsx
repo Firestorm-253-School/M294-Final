@@ -30,7 +30,12 @@ const PostItem: React.FC<IPostItemProps> = ({ post }) => {
             </ul>
           </div>
         )}
-        <ReactionContainer postId={post.postId} reactions={post.reactions || []} />
+        <ReactionContainer
+          postId={post.postId}
+          likes={post.likes}
+          dislikes={post.dislikes}
+          rating={post.rating}
+        />
         <button
           onClick={() => setShowComments(!showComments)}
           className="btn btn-primary mt-4"
