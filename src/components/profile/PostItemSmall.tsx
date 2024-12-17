@@ -4,16 +4,20 @@ import {
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
+import { Post } from "../../interfaces/Post";
 
-export interface IPostItemSmallProps {}
+export interface IPostItemSmallProps {
+  post: Post;
+}
 
 const PostItemSmall: React.FC<IPostItemSmallProps> = (props) => {
+  const post = props.post;
   return (
     <>
       <div className="card bg-post-bg w-72 shadow-xl text-neutral-950">
         <div className="card-body p-5 gap-5">
-          <h2 className="card-title">Simon</h2>
-          <p>Hi, this is the first Post! Look at this Post</p>
+          <h2 className="card-title">{post.user.displayName}</h2>
+          <p>{post.content}</p>
           <div className="card-actions flex flex-row items-center justify-between">
             <div className="flex flex-row gap-4">
               <ThumbsUp fill="none" />

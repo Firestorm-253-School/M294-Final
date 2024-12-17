@@ -1,4 +1,3 @@
-import Reaction from "./Reaction";
 import MediaLink from "./MediaLink";
 import { ApiDelete, ApiGet } from "../components/api";
 
@@ -12,6 +11,7 @@ export interface Post {
   content: string;
   user: {
     username: string;
+    displayName: string;
   };
   created_at: string;
   updated_at: string;
@@ -27,7 +27,7 @@ export async function GetPosts(page: number = 0) {
   //   array[post.id] = post;
   //   return array;
   // }, {});
-  return posts
+  return posts;
 }
 
 export async function GetPostById(post_id: number) {
