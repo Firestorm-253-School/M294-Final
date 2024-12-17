@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreatePostPopup from "../Popups/CreatePostPopup";
 import CreateFeedPopup from "../Popups/CreateFeedPopup";
 import { logout } from "../forms/logout";
@@ -9,8 +9,9 @@ export interface INavbarProps { }
 const Navbar: React.FC<INavbarProps> = (props) => {
   const [createPostPopup, setcreatePostPopup] = useState(false);
   const [createFeedPopup, setCreateFeedPopup] = useState(false);
+  const [currentUserId, setcurrentUserId] = useState(0);
   const navigate = useNavigate();
-  const currentUserId = Number(localStorage.getItem("user_id"));
+  useEffect(() => { setcurrentUserId(Number(localStorage.getItem("user_id"))); }, [])
   return (
     <>
       <CreatePostPopup
