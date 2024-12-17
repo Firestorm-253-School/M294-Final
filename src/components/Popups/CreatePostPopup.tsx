@@ -46,9 +46,9 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
   };
 
   const removeLink = (index: number, type: string) => {
-    if (type === 'youtube') {
+    if (type === "youtube") {
       setYoutubeLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
-    } else if (type === 'spotify') {
+    } else if (type === "spotify") {
       setSpotifyLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
     }
   };
@@ -115,7 +115,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => removeLink(index, 'youtube')}
+                    onClick={() => removeLink(index, "youtube")}
                     className="btn btn-sm btn-error"
                   >
                     Remove
@@ -132,7 +132,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => removeLink(index, 'spotify')}
+                    onClick={() => removeLink(index, "spotify")}
                     className="btn btn-sm btn-error"
                   >
                     Remove
