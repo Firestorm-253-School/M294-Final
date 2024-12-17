@@ -16,8 +16,8 @@ const LoginForm: React.FC<ILoginFormProps> = (props) => {
     if (response.status == "success") {
       setIsLoggedIn(true);
       localStorage.setItem("auth_token", response.token);
-      const response_profile = await ApiGet("users/profile");
-      localStorage.setItem("user_id", response_profile.id);
+      const response_profile = await ApiGet("profiles/own");
+      localStorage.setItem("user_id", response_profile.response.userId);
       //redirect
     } else {
       setError(true);

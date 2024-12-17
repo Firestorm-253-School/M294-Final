@@ -27,11 +27,10 @@ const CommentSection: React.FC<ICommentSectionProps> = ({ postId }) => {
     };
     const response = await ApiPost(commentObject, `posts/${postId}/comments`);
     if (response && response.status === "success") {
-      const CommentRespose = await ApiGet(`posts/${postId}/comments`)
+      const CommentRespose = await ApiGet(`posts/${postId}/comments`);
       setComments(CommentRespose.response);
-      
-      setNewComment("");
 
+      setNewComment("");
     } else {
       console.error("Failed to add comment:", response);
     }
@@ -45,7 +44,8 @@ const CommentSection: React.FC<ICommentSectionProps> = ({ postId }) => {
           <li key={comment.commentId}>
             {comment.user ? (
               <>
-                <span className="font-semibold">{comment.user.username}:</span> "{comment.comment}"
+                <span className="font-semibold">{comment.user.username}:</span>{" "}
+                "{comment.comment}"
               </>
             ) : (
               <span>Unknown user: "{comment.comment}"</span>
