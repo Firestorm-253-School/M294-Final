@@ -13,12 +13,11 @@ export interface Post {
     username: string;
     displayName: string;
   };
-  created_at: string;
-  updated_at: string;
   medialinks?: MediaLink[];
   likes: number;
   dislikes: number;
   rating: number;
+  saved: boolean;
 }
 
 export async function GetPosts(page: number = 0) {
