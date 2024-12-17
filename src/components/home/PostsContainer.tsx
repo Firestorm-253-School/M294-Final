@@ -6,8 +6,6 @@ import PostItem from "./PostItem";
 export interface IPostsContainerProps {}
 
 const PostsContainer: React.FC<IPostsContainerProps> = (props) => {
-  // const [isLoading, setLoading] = useState(true);
-  // const [editPostPopup, setEditPostPopup] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
