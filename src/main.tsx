@@ -7,8 +7,10 @@ import ProtectedRoute from "./components/protectedRoutes/ProtectedRoute.tsx";
 import LoginPage from "./pages/auth/LoginPage.tsx";
 import RegisterPage from "./pages/auth/RegisterPage.tsx";
 import HomePage from "./pages/home/HomePage.tsx";
+import LiveFeed from "./pages/livefeed.tsx/LiveFeed.tsx";
 import UsersOverviewPage from "./pages/users/UsersOverviewPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -23,6 +25,7 @@ createRoot(document.getElementById("root")!).render(
           }
         />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/LiveFeed" element={<LiveFeed />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/users" element={<UsersOverviewPage />} />

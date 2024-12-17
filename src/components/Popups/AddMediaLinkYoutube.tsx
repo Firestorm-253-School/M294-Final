@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ApiGet } from "../api";
 
 export interface IAddMediaLinkProps {
   isVisible: boolean;
@@ -8,22 +7,20 @@ export interface IAddMediaLinkProps {
 }
 
 const AddMediaLinkYoutube: React.FC<IAddMediaLinkProps> = (props) => {
-  const [searchResults, setSearchResults] = useState([]);
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState("");
 
-  const add = (url: any) => {
+  const add = () => {
+    const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+    if (!youtubeRegex.test(url)) {
+      setError("Please enter a valid YouTube link.");
+      return;
+    }
     console.log(url);
     props.addLink({ url: url, source: "Youtube" });
-    setSearchResults([]);
+    setUrl("");
+    setError("");
     props.cancelFunction();
-  };
-
-  const fetchYoutube = async (formData: any) => {
-    try {
-      const response = await ApiGet(`videos?q=${formData.query}`);
-      setSearchResults(response.videos);
-    } catch (error) {
-      console.error("Error fetching YouTube videos", error);
-    }
   };
 
   return (
@@ -35,55 +32,25 @@ const AddMediaLinkYoutube: React.FC<IAddMediaLinkProps> = (props) => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const formData = new FormData(form);
-                const data: Record<string, any> = {};
-                formData.forEach((value, key) => {
-                  data[key] = value;
-                });
-                fetchYoutube(data);
+                add();
               }}
               className="space-y-4"
             >
               <input
                 type="text"
-                name="query"
-                id="query"
-                placeholder="Search for a YouTube video..."
-                className="input input-bordered input-primary w-full"
-                required
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="Paste YouTube link here"
+                className="input input-bordered w-full mb-4"
               />
-              <button type="submit" className="btn btn-primary w-full">
-                Search
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <button type="submit" className="btn btn-primary w-full mb-4">
+                Add Link
               </button>
             </form>
-
-            <div className="max-h-64 overflow-y-auto mt-4 space-y-2">
-              {searchResults?.map((result: any) => (
-                <div
-                  key={result.videoId}
-                  className="flex items-center justify-between p-2  rounded-md shadow-sm"
-                >
-                  <h4 className="text-sm font-medium">{result.title}</h4>
-                  <button
-                    onClick={() =>
-                      add(`https://youtube.com/watch?v=${result.videoId}`)
-                    }
-                    className="btn btn-success btn-sm"
-                  >
-                    Add
-                  </button>
-                </div>
-              ))}
-            </div>
-
             <button
-              type="button"
-              onClick={() => {
-                setSearchResults([]);
-                props.cancelFunction();
-              }}
-              className="btn btn-outline btn-error w-full mt-4"
+              onClick={() => props.cancelFunction()}
+              className="btn btn-danger w-full mt-4"
             >
               Cancel
             </button>

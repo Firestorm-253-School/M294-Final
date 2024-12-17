@@ -13,8 +13,8 @@ export interface ICreatePostPopupProps {
 
 const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
   const [mediaPopupVisible, setMediaPopupVisible] = useState(-1);
-  const [youtubeLinks, setYoutubeLinks] = useState<any[]>();
-  const [spotifyLinks, setSpotifyLinks] = useState<any[]>();
+  const [youtubeLinks, setYoutubeLinks] = useState<any[]>([]);
+  const [spotifyLinks, setSpotifyLinks] = useState<any[]>([]);
   const [content, setContent] = useState("");
 
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     if (links == undefined) {
       links = [];
     }
-    const postObject = { content: content, mediaLinks: links };
+    const postObject = { content: content, medialinks: links };
     console.log(postObject);
     const response = await ApiPost(postObject, "posts");
     window.location.reload();
@@ -37,25 +37,20 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
     }
   };
 
-  const addYoutubeLink = (link: string) => {
-    console.log(link);
-    setYoutubeLinks((prevLinks) => {
-      if (prevLinks) {
-        return [...prevLinks, link];
-      } else {
-        return [link];
-      }
-    });
+  const addYoutubeLink = (link: any) => {
+    setYoutubeLinks((prevLinks) => [...prevLinks, link]);
   };
-  const addSpotifyLink = (link: string) => {
-    console.log(link);
-    setSpotifyLinks((prevLinks) => {
-      if (prevLinks) {
-        return [...prevLinks, link];
-      } else {
-        return [link];
-      }
-    });
+
+  const addSpotifyLink = (link: any) => {
+    setSpotifyLinks((prevLinks) => [...prevLinks, link]);
+  };
+
+  const removeLink = (index: number, type: string) => {
+    if (type === "youtube") {
+      setYoutubeLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
+    } else if (type === "spotify") {
+      setSpotifyLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
+    }
   };
 
   return (
@@ -72,6 +67,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
               id="content"
               placeholder="Write something..."
               className="textarea textarea-bordered w-full h-32 mb-4 p-2"
+              value={content}
               onChange={(e) => {
                 setContent(e.target.value);
               }}
@@ -109,7 +105,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
             />
 
             <div className="space-y-2 mb-4">
-              {youtubeLinks?.map((link, index) => (
+              {youtubeLinks.map((link, index) => (
                 <div
                   key={index}
                   className="flex justify-between items-center bg-gray-100 p-2 rounded-md"
@@ -119,14 +115,14 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => console.log("Coming soon")}
+                    onClick={() => removeLink(index, "youtube")}
                     className="btn btn-sm btn-error"
                   >
                     Remove
                   </button>
                 </div>
               ))}
-              {spotifyLinks?.map((link, index) => (
+              {spotifyLinks.map((link, index) => (
                 <div
                   key={index}
                   className="flex justify-between items-center bg-gray-100 p-2 rounded-md"
@@ -136,7 +132,7 @@ const CreatePostPopup: React.FC<ICreatePostPopupProps> = (props) => {
                   </h4>
                   <button
                     type="button"
-                    onClick={() => console.log("coming soon")}
+                    onClick={() => removeLink(index, "spotify")}
                     className="btn btn-sm btn-error"
                   >
                     Remove

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CreatePostPopup from "../Popups/CreatePostPopup";
+import CreateFeedPopup from "../Popups/CreateFeedPopup";
 import { logout } from "../forms/logout";
 import { useNavigate } from "react-router";
 
@@ -7,6 +8,7 @@ export interface INavbarProps {}
 
 const Navbar: React.FC<INavbarProps> = (props) => {
   const [createPostPopup, setcreatePostPopup] = useState(false);
+  const [createFeedPopup, setCreateFeedPopup] = useState(false);
   const navigate = useNavigate();
   return (
     <>
@@ -14,6 +16,10 @@ const Navbar: React.FC<INavbarProps> = (props) => {
         closeFunktion={() => setcreatePostPopup(false)}
         isOpen={createPostPopup}
       ></CreatePostPopup>
+      <CreateFeedPopup
+        closeFunktion={() => setCreateFeedPopup(false)}
+        isOpen={createFeedPopup}
+      ></CreateFeedPopup>
 
       <div className="navbar bg-base-100 w-full fixed z-10">
         <div className="navbar-start">
@@ -37,6 +43,12 @@ const Navbar: React.FC<INavbarProps> = (props) => {
             className="btn btn-primary btn-outline"
           >
             Create Post
+          </a>
+          <a
+            onClick={() => setCreateFeedPopup((popup) => !popup)}
+            className="btn btn-secondary btn-outline"
+          >
+            Create Feed
           </a>
           <a
             className="btn btn-secondary btn-outline btn-ghost"
