@@ -9,9 +9,9 @@ export default interface User {
 }
 
 export async function GetCurrent(): Promise<User | null> {
-	return await ApiGet("users/profile");
+	return await ApiGet("profiles");
 }
 
 export async function GetUserById(user_id: number): Promise<User | null> {
-	return await ApiGet("users/" + user_id);
+	return await ApiGet("profiles/" + user_id);
 }
