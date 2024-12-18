@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreatePostPopup from "../Popups/CreatePostPopup";
 import CreateFeedPopup from "../Popups/CreateFeedPopup";
 import { logout } from "../forms/logout";
 import { useNavigate } from "react-router";
 
-export interface INavbarProps {}
+export interface INavbarProps { }
 
 const Navbar: React.FC<INavbarProps> = (props) => {
   const [createPostPopup, setcreatePostPopup] = useState(false);
   const [createFeedPopup, setCreateFeedPopup] = useState(false);
+  const [currentUserId, setcurrentUserId] = useState(0);
   const navigate = useNavigate();
+  useEffect(() => { setcurrentUserId(Number(localStorage.getItem("user_id"))); }, [])
   return (
     <>
       <CreatePostPopup
@@ -73,6 +75,14 @@ const Navbar: React.FC<INavbarProps> = (props) => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-max p-2 shadow"
             >
+              <li>
+                <a
+                  onClick={() => navigate(`/profile/${currentUserId}`)}
+                  className="justify-between"
+                >
+                  Profile
+                </a>
+              </li>
               <li>
                 <a
                   onClick={() => navigate("/users")}
