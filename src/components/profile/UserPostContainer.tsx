@@ -1,42 +1,80 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ApiGet } from "../api";
 import PostItemSmall from "./PostItemSmall";
+import { Post } from "../../interfaces/Post";
 
-export interface IUserPostContainerProps {
+interface IUserPostContainerProps {
   userId: number;
   activeTab: string;
 }
 
 const UserPostContainer: React.FC<IUserPostContainerProps> = (props) => {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(0); // Use state for page
+  const [page, setPage] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("test");
+    console.log("Active Tab Changed:", props.activeTab);
     setPosts([]);
     setHasMore(true);
     setPage(0);
     fetchMoreData(0);
-  }, [props.activeTab]);
+  }, [props.activeTab, props.userId]);
 
-  const fetchMoreData = async (page: number) => {
-    console.log(page);
+  const fetchMoreData = async (currentPage: number) => {
+    console.log("Fetching Page:", currentPage);
 
-    const response = await ApiGet(
-      `profiles/${props.userId}/${props.activeTab}/${page}`
-    );
-    console.log(response);
-    setPosts((prevPosts) => [...prevPosts, ...response.response.results]);
-    if (response.response.page >= response.response.totalPages) {
+    try {
+      // Verwende den funktionierenden Endpunkt
+      const response = await ApiGet(`posts/page/${currentPage}`);
+      console.log("API Response:", response);
+
+      if (response && response.status === "success") {
+        const fetchedPosts: Post[] = response.response.results.map((post: any) => {
+          console.log("Mapping Post:", post); // Zusätzliche Log-Ausgabe
+          return {
+            postId: post.postId,
+            user: post.user,
+            content: post.content,
+            likes: post.likes !== undefined ? post.likes : 0,
+            dislikes: post.dislikes !== undefined ? post.dislikes : 0,
+            rating: post.rating,
+            saved: post.saved,
+            medialinks: post.medialinks,
+            createdAt: post.createdAt || new Date().toISOString(),
+          };
+        });
+
+        console.log("Fetched Posts:", fetchedPosts);
+
+        setPosts((prevPosts) => [...prevPosts, ...fetchedPosts]);
+
+        if (currentPage >= response.response.totalPages - 1) {
+          setHasMore(false);
+        } else {
+          setPage((prevPage) => prevPage + 1);
+        }
+      } else {
+        console.error("Failed to fetch posts:", response);
+        setError("Fehler beim Laden der Posts.");
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      setError("Ein Fehler ist aufgetreten.");
       setHasMore(false);
     }
-    setPage((prevPage) => prevPage + 1);
   };
 
   return (
     <>
+      {error && (
+        <div className="error-message text-red-500 text-center mb-4">
+          {error}
+        </div>
+      )}
       <InfiniteScroll
         dataLength={posts.length}
         next={() => fetchMoreData(page)}
@@ -49,8 +87,8 @@ const UserPostContainer: React.FC<IUserPostContainerProps> = (props) => {
           </p>
         }
       >
-        {posts.map((post, index) => (
-          <PostItemSmall post={post} key={index} />
+        {posts.map((post) => (
+          <PostItemSmall post={post} key={post.postId} />
         ))}
       </InfiniteScroll>
     </>
