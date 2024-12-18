@@ -3,8 +3,9 @@ import UserPostContainer from "../components/profile/UserPostContainer";
 import { useEffect, useState } from "react";
 import UserCard from "../components/profile/UserCard";
 import { ApiGet } from "../components/api";
+import Navbar from "../components/layout/Navbar";
 
-export interface IProfilePageProps {}
+export interface IProfilePageProps { }
 
 const ProfilePage: React.FC<IProfilePageProps> = (props) => {
   const { userId } = useParams();
@@ -36,14 +37,14 @@ const ProfilePage: React.FC<IProfilePageProps> = (props) => {
 
   return (
     <>
+      <Navbar />
       <div className="flex flex-col gap-10 pl-24 pt-24">
         <UserCard refresh={refresh} profile={profile}></UserCard>
         <div className="px-10 flex flex-col items-center gap-10">
           <div className="join">
             <button
-              className={`btn join-item bg-bg-100 ${
-                activeTab == "posts" ? "bg-primary" : ""
-              }`}
+              className={`btn join-item bg-bg-100 ${activeTab == "posts" ? "bg-primary" : ""
+                }`}
               onClick={() => setActiveTab("posts")}
             >
               Posts
@@ -51,17 +52,15 @@ const ProfilePage: React.FC<IProfilePageProps> = (props) => {
             {profile.isOwn == true ? (
               <>
                 <button
-                  className={`btn join-item bg-bg-100 ${
-                    activeTab == "likes" ? "bg-primary" : ""
-                  }`}
+                  className={`btn join-item bg-bg-100 ${activeTab == "likes" ? "bg-primary" : ""
+                    }`}
                   onClick={() => setActiveTab("likes")}
                 >
                   Likes
                 </button>
                 <button
-                  className={`btn join-item bg-bg-100 ${
-                    activeTab == "saves" ? "bg-primary" : ""
-                  }`}
+                  className={`btn join-item bg-bg-100 ${activeTab == "saves" ? "bg-primary" : ""
+                    }`}
                   onClick={() => setActiveTab("saves")}
                 >
                   Saves
