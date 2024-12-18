@@ -10,7 +10,9 @@ import HomePage from "./pages/home/HomePage.tsx";
 import LiveFeed from "./pages/livefeed.tsx/LiveFeed.tsx";
 import UsersOverviewPage from "./pages/users/UsersOverviewPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import FriendsPage from "./pages/Friends/FriendsPage.tsx";
 import { SocketProvider } from "./components/sockets/SocketContext.tsx";
+import SocketTestPage from "./pages/socketTestPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -31,6 +33,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/users" element={<UsersOverviewPage />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/socket/:userId" element={<SocketTestPage />} />
+          <Route path="/friends" element={<FriendsPage />} />
         </Routes>
       </BrowserRouter>
     </SocketProvider>

@@ -1,21 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
-import io from "socket.io-client";
+import socket from "./socket";
 
-export const SocketContext = createContext(null);
+export const SocketContext = createContext({ socket });
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [socket, setSocket] = useState<any>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const newSocket = io("http://192.168.100.40:3000", {
-      auth: {
-        token: localStorage.getItem("auth_token"),
-      },
-    });
-
     function onConnect() {
       setIsConnected(true);
       console.log("Connected to server");
@@ -25,19 +18,18 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsConnected(false);
     }
 
-    newSocket.on("connect", onConnect);
-    newSocket.on("disconnect", onDisconnect);
-
-    setSocket(newSocket);
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
 
     return () => {
-      newSocket.off("connect", onConnect);
-      newSocket.off("disconnect", onDisconnect);
-      newSocket.close();
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
     };
   }, []);
 
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={{ socket }}>
+      {children}
+    </SocketContext.Provider>
   );
 };
