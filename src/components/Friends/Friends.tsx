@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ApiGet, ApiPost, ApiDelete } from "../api";
-import UserCard from "../profile/UserCard";
+import UserCard from "./UserCard";
 
 interface User {
   profileId: number;
   displayName: string;
   email: string;
   isOwn?: boolean;
+  isFriend?: boolean;
+  requestOutgoing?: boolean;
 }
 
 const Friends: React.FC = () => {
@@ -33,6 +35,8 @@ const Friends: React.FC = () => {
         displayName: user.displayName,
         email: user.email,
         isOwn: user.isOwn,
+        isFriend: user.isFriend,
+        requestOutgoing: user.requestOutgoing,
       }));
       console.log("All Users:", allUsers); // Debugging log
       const nonFriends = allUsers.filter(
@@ -91,16 +95,6 @@ const Friends: React.FC = () => {
     }
   };
 
-  const removeFriend = async (friendId: number) => {
-    const response = await ApiDelete(`friends/${friendId}`);
-    if (response && response.status === "success") {
-      console.log("Friend removed");
-      setFriends(friends.filter((friend) => friend.profileId !== friendId));
-    } else {
-      console.error("Failed to remove friend:", response);
-    }
-  };
-
   const filteredUsersToAdd = usersToAdd.filter((user) =>
     user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -115,12 +109,6 @@ const Friends: React.FC = () => {
           {friends.map((friend) => (
             <div key={friend.profileId} className="card w-full bg-base-100 shadow-md p-4">
               <UserCard profile={friend} refresh={fetchFriends} />
-              <button
-                className="btn btn-error mt-2"
-                onClick={() => removeFriend(friend.profileId)}
-              >
-                Remove Friend
-              </button>
             </div>
           ))}
         </div>
@@ -140,10 +128,13 @@ const Friends: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredUsersToAdd.map((user) => (
             <div key={user.profileId} className="card w-full bg-base-100 shadow-md p-4">
-              <UserCard profile={user} refresh={() => {}} />
+              <UserCard profile={user} refresh={fetchUsersToAdd} />
               {outgoingRequests.includes(user.profileId) ? (
-                <button className="btn btn-secondary mt-2" disabled>
-                  Request Sent
+                <button
+                  className="btn btn-secondary mt-2"
+                  onClick={() => cancelFriendRequest(user.profileId)}
+                >
+                  Cancel Request
                 </button>
               ) : (
                 <button
