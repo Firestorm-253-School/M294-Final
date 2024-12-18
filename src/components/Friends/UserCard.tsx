@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Pencil, UserPlus } from "lucide-react";
-import { ApiPost, ApiDelete } from "../api";
+import { Pencil } from "lucide-react";
+import UserCardActions from "./UserCardActions";
 
 export interface IUserCardProps {
   profile: any;
@@ -20,16 +20,6 @@ const UserCard: React.FC<IUserCardProps> = ({ profile, refresh }) => {
 
   const saveProfile = async () => {
     // Implement profile saving logic here
-  };
-
-  const sendRequest = async (userId: number) => {
-    await ApiPost({}, `requests/${userId}/send`);
-    refresh();
-  };
-
-  const cancelRequest = async (userId: number) => {
-    await ApiDelete(`requests/${userId}/cancel`);
-    refresh();
   };
 
   return (
@@ -70,22 +60,12 @@ const UserCard: React.FC<IUserCardProps> = ({ profile, refresh }) => {
         <p className="text-sm text-gray-400">{user.email}</p>
 
         {/* Action Buttons */}
-        {!user.isOwn && !user.isFriend && !user.requestOutgoing && (
-          <button
-            className="btn btn-sm btn-primary mt-2"
-            onClick={() => sendRequest(user.profileId)}
-          >
-            <UserPlus size={16} /> Add
-          </button>
-        )}
-        {!user.isOwn && user.requestOutgoing && (
-          <button
-            className="btn btn-sm btn-secondary mt-2"
-            onClick={() => cancelRequest(user.profileId)}
-          >
-            Cancel Request
-          </button>
-        )}
+        <UserCardActions
+          userId={user.profileId}
+          isFriend={user.isFriend}
+          requestOutgoing={user.requestOutgoing}
+          refresh={refresh}
+        />
       </div>
     </div>
   );

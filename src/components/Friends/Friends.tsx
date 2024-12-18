@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApiGet, ApiPost, ApiDelete } from "../api";
-import UserCard from "./UserCard";
+import UserList from "./UserList";
+import { filterUsers } from "../../utils/filterUsers";
 
 interface User {
   profileId: number;
@@ -95,9 +96,7 @@ const Friends: React.FC = () => {
     }
   };
 
-  const filteredUsersToAdd = usersToAdd.filter((user) =>
-    user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUsersToAdd = filterUsers(usersToAdd, searchTerm);
 
   console.log("Filtered Users to Add:", filteredUsersToAdd); // Debugging log
 
@@ -105,13 +104,7 @@ const Friends: React.FC = () => {
     <div className="p-4">
       <h2 className="text-xl text-primary spacing">Friends</h2>
       {friends.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {friends.map((friend) => (
-            <div key={friend.profileId} className="card w-full bg-base-100 shadow-md p-4">
-              <UserCard profile={friend} refresh={fetchFriends} />
-            </div>
-          ))}
-        </div>
+        <UserList users={friends} refresh={fetchFriends} />
       ) : (
         <p>No friends found.</p>
       )}
@@ -125,13 +118,7 @@ const Friends: React.FC = () => {
         className="input input-bordered w-full mb-4"
       />
       {filteredUsersToAdd.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredUsersToAdd.map((user) => (
-            <div key={user.profileId} className="card w-full bg-base-100 shadow-md p-4">
-              <UserCard profile={user} refresh={fetchUsersToAdd} />
-            </div>
-          ))}
-        </div>
+        <UserList users={filteredUsersToAdd} refresh={fetchUsersToAdd} />
       ) : (
         <p>No users available to add.</p>
       )}
