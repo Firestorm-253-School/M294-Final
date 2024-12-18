@@ -58,7 +58,12 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
 
   const requestSong = () => {
     console.log("Requesting song");
-    socket.emit("livefeed_request_song", { videoId: "i8ZsbAdLQD8s" });
+    socket.emit("livefeed_request_song", { videoId: "i8ZsbAdLQD8" });
+  };
+
+  const voteSong = () => {
+    console.log("Voting song");
+    socket.emit("livefeed_vote_song", { requestedSongId: 1 });
   };
 
   return (
@@ -85,7 +90,12 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
       <button onClick={() => leaveLivefeed()} className="btn">
         Leave Livefeed
       </button>
-      <button onClick={() => requestSong()}>Request</button>
+      <button className="btn" onClick={() => requestSong()}>
+        Request
+      </button>
+      <button className="btn" onClick={() => voteSong()}>
+        Vote
+      </button>
     </>
   );
 };
