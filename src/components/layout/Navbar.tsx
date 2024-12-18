@@ -85,6 +85,14 @@ const Navbar: React.FC<INavbarProps> = (props) => {
               </li>
               <li>
                 <a
+                  onClick={() => navigate(`/LiveFeed`)}
+                  className="justify-between"
+                >
+                  LiveFeeds
+                </a>
+              </li>
+              <li>
+                <a
                   onClick={() => navigate("/users")}
                   className="justify-between"
                 >
