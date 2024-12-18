@@ -5,9 +5,10 @@ import UserCardActions from "./UserCardActions";
 export interface IUserCardProps {
   profile: any;
   refresh: () => void;
+  showAddButton: boolean;
 }
 
-const UserCard: React.FC<IUserCardProps> = ({ profile, refresh }) => {
+const UserCard: React.FC<IUserCardProps> = ({ profile, refresh, showAddButton }) => {
   const user = profile;
 
   const [isEditingName, setIsEditingName] = useState(false);
@@ -60,12 +61,14 @@ const UserCard: React.FC<IUserCardProps> = ({ profile, refresh }) => {
         <p className="text-sm text-gray-400">{user.email}</p>
 
         {/* Action Buttons */}
-        <UserCardActions
-          userId={user.profileId}
-          isFriend={user.isFriend}
-          requestOutgoing={user.requestOutgoing}
-          refresh={refresh}
-        />
+        {showAddButton && (
+          <UserCardActions
+            userId={user.profileId}
+            isFriend={user.isFriend}
+            requestOutgoing={user.requestOutgoing}
+            refresh={refresh}
+          />
+        )}
       </div>
     </div>
   );

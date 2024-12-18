@@ -1,5 +1,5 @@
 import React from "react";
-import { UserPlus } from "lucide-react";
+import { UserPlus, MessageCircle } from "lucide-react";
 import { ApiPost, ApiDelete } from "../api";
 
 interface UserCardActionsProps {
@@ -21,7 +21,11 @@ const UserCardActions: React.FC<UserCardActionsProps> = ({ userId, isFriend, req
   };
 
   if (isFriend) {
-    return null;
+    return (
+      <button className="btn btn-sm btn-primary mt-2">
+        <MessageCircle size={16} /> Chat
+      </button>
+    );
   }
 
   return (
