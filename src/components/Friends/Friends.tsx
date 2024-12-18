@@ -129,21 +129,6 @@ const Friends: React.FC = () => {
           {filteredUsersToAdd.map((user) => (
             <div key={user.profileId} className="card w-full bg-base-100 shadow-md p-4">
               <UserCard profile={user} refresh={fetchUsersToAdd} />
-              {outgoingRequests.includes(user.profileId) ? (
-                <button
-                  className="btn btn-secondary mt-2"
-                  onClick={() => cancelFriendRequest(user.profileId)}
-                >
-                  Cancel Request
-                </button>
-              ) : (
-                <button
-                  className="btn btn-primary mt-2"
-                  onClick={() => sendFriendRequest(user.profileId)}
-                >
-                  Add Friend
-                </button>
-              )}
             </div>
           ))}
         </div>
