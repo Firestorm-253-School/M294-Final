@@ -11,12 +11,12 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
   const { userId } = useParams();
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      const messages = await ApiGet(`chats/${userId}/0`);
-      console.log(messages.response);
-      setMessages(messages.response);
-    };
-    fetchMessages();
+    // const fetchMessages = async () => {
+    //   const messages = await ApiGet(`chats/${userId}/0`);
+    //   console.log(messages.response);
+    //   setMessages(messages.response);
+    // };
+    // fetchMessages();
 
     const handleChatMessage = (data: any) => {
       console.log(data);
@@ -25,10 +25,29 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
       }
     };
 
+    const handleLivefeedMessage = (data: any) => {
+      console.log(data);
+      setMessages((messages) => [data, ...messages]);
+    };
+
+    const handleError = (data: any) => {
+      console.log(data);
+    };
+
+    const handleLivefeedInitData = (data: any) => {
+      console.log(data);
+    };
+
     socket.on("chat_message", handleChatMessage);
+    socket.on("error", handleError);
+    socket.on("livefeed_message", handleLivefeedMessage);
+    socket.on("livefeed_init_data", handleLivefeedInitData);
 
     return () => {
-      socket.off("chat_message", handleChatMessage);
+      socket.off("chat_message", handleLivefeedMessage);
+      socket.off("error", handleError);
+      socket.off("livefeed_message", handleLivefeedMessage);
+      socket.off("livefeed_init_data", handleLivefeedInitData);
     };
   }, []);
 
@@ -40,6 +59,16 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
       { senderId: localStorage.getItem("user_id"), message: message },
       ...messages,
     ]);
+  };
+
+  const sendLivefeedMessage = () => {
+    console.log("Sending livefeed message");
+    socket.emit("livefeed_message", { message: message });
+  };
+
+  const joinLivefeed = () => {
+    console.log("Joining livefeed");
+    socket.emit("join_livefeed", { livefeedId: 2 });
   };
 
   return (
@@ -57,8 +86,11 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
         placeholder="Type your message"
         className="input"
       />
-      <button onClick={() => sendMessage()} className="btn">
+      <button onClick={() => sendLivefeedMessage()} className="btn">
         Send Message
+      </button>
+      <button onClick={() => joinLivefeed()} className="btn">
+        Join Livefeed
       </button>
     </>
   );
