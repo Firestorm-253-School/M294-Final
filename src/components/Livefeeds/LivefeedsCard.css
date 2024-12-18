@@ -1,0 +1,123 @@
+.livefeed-card {
+    width: 40%;
+    background-color: #2d3748;
+    /* bg-gray-800 */
+    border-radius: 1rem;
+    /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* shadow-lg */
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    /* p-4 */
+    margin-bottom: 1rem;
+    /* mb-4 */
+    margin-left: auto;
+    margin-right: 5%;
+
+
+}
+
+.livefeed-info {
+    display: flex;
+    gap: 0.25rem;
+    /* gap-1 */
+    margin-bottom: 1rem;
+    /* mb-4 */
+}
+
+.livefeed-info h3 {
+    color: #fff;
+    /* text-white */
+    font-weight: 600;
+    /* font-semibold */
+    font-size: 25px;
+    /* text-lg */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* truncate */
+}
+
+.livefeed-info p {
+    color: #a0aec0;
+    /* text-gray-400 */
+    font-size: 0.875rem;
+    /* text-sm */
+}
+
+.livefeed-info .followers {
+    color: #e2e8f0;
+}
+
+.livefeed-info .chatter {
+    color: #e2e8f0;
+    font-size: 11px;
+    margin-top: 11px;
+}
+
+.chatters {
+    /* text-red-500 */
+    font-weight: 500;
+    /* font-medium */
+    font-size: 0.875rem;
+    /* text-sm */
+    margin-bottom: 1rem;
+    /* mb-4 */
+}
+
+.chatters .cooldown {
+    color: #a0aec0;
+    /* text-gray-400 */
+    font-size: 0.75rem;
+    /* text-xs */
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    /* gap-2 */
+}
+
+.actions .followers {
+    color: #e2e8f0;
+    /* text-gray-200 */
+    font-size: 0.875rem;
+    /* text-sm */
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.actions button {
+    padding: 0.5rem 1rem;
+    /* px-4 py-2 */
+    border-radius: 0.25rem;
+    /* rounded */
+    transition: background-color 0.3s;
+    /* transition */
+}
+
+.actions .follow-btn {
+    background-color: #0cd8b6;
+    /* bg-green-500 */
+    color: #fff;
+    margin-right: auto;
+}
+
+.actions .follow-btn:hover {
+    background-color: #0caf94;
+    /* hover:bg-green-600 */
+}
+
+.actions .join-btn {
+    background-color: #a70fe4;
+    /* bg-blue-500 */
+    color: #fff;
+    /* text-white */
+}
+
+.actions .join-btn:hover {
+    background-color: #820cb1;
+    /* hover:bg-blue-600 */
+}
