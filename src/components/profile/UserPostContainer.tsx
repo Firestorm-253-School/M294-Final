@@ -27,8 +27,12 @@ const UserPostContainer: React.FC<IUserPostContainerProps> = (props) => {
     console.log("Fetching Page:", currentPage);
 
     try {
-      // Verwende den funktionierenden Endpunkt
-      const response = await ApiGet(`posts/page/${currentPage}`);
+      // Hole die user_id aus dem Local Storage
+      const storedUserId = parseInt(localStorage.getItem("user_id") || "0", 10);
+      console.log("Stored User ID:", storedUserId);
+
+      // Verwende den korrekten Endpunkt, der nur die Posts des aktuellen Benutzers zurückgibt
+      const response = await ApiGet(`profiles/${storedUserId}/posts/${currentPage}`);
       console.log("API Response:", response);
 
       if (response && response.status === "success") {

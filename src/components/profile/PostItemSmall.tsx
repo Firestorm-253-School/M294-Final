@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Bookmark,
   MessageSquareText,
@@ -10,8 +11,7 @@ export interface IPostItemSmallProps {
   post: Post;
 }
 
-const PostItemSmall: React.FC<IPostItemSmallProps> = (props) => {
-  const post = props.post;
+const PostItemSmall: React.FC<IPostItemSmallProps> = ({ post }) => {
   console.log("Likes:", post.likes, "Dislikes:", post.dislikes); // Überprüfung
 
   return (
