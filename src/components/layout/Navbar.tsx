@@ -23,7 +23,7 @@ const Navbar: React.FC<INavbarProps> = (props) => {
         isOpen={createFeedPopup}
       ></CreateFeedPopup>
 
-      <div className="navbar bg-base-100 w-full fixed z-10">
+      <div className="navbar bg-base-100 w-full fixed z-10 shadow-lg">
         <div className="navbar-start">
           <a onClick={() => navigate("/")} className="btn btn-ghost text-xl">
             X Clone
@@ -93,10 +93,10 @@ const Navbar: React.FC<INavbarProps> = (props) => {
               </li>
               <li>
                 <a
-                  onClick={() => navigate("/users")}
+                  onClick={() => navigate("/friends")}
                   className="justify-between"
                 >
-                  User List
+                  Friends
                 </a>
               </li>
               <li>

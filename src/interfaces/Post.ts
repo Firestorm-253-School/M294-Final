@@ -6,18 +6,29 @@ export interface PostReactions {
   count: number;
 }
 
+export interface Medialink {
+  medialinkId: number;
+  source: string;
+  url: string;
+  postId: number;
+}
+
+export interface User {
+  userId: number;
+  username: string;
+  displayName: string;
+}
+
 export interface Post {
   postId: number;
+  user: User;
   content: string;
-  user: {
-    username: string;
-    displayName: string;
-  };
-  medialinks?: MediaLink[];
   likes: number;
   dislikes: number;
   rating: number;
   saved: boolean;
+  medialinks: Medialink[];
+  createdAt?: string; // Optional, falls nicht immer vorhanden
 }
 
 export async function GetPosts(page: number = 0) {
