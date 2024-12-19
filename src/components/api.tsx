@@ -1,4 +1,4 @@
-const address = "http://localhost:3000";
+const address = "http://192.168.100.40:3000";
 
 export const ApiGet = async (request: string) => {
   try {
