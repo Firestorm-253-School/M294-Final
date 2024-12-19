@@ -13,6 +13,7 @@ export default {
       "text-secondary": "#A6A6A6",
       disabled: "#BABABA",
       "post-bg": "#81BCE0",
+      "accent-secondary": "#134e4a",
     },
     extend: {},
   },

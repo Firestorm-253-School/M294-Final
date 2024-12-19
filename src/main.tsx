@@ -33,7 +33,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/users" element={<UsersOverviewPage />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
-          <Route path="/socket/:userId" element={<SocketTestPage />} />
+          <Route path="/livefeed/:livefeedId" element={<SocketTestPage />} />
           <Route path="/friends" element={<FriendsPage />} />
         </Routes>
       </BrowserRouter>
