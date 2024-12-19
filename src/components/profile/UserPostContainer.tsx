@@ -31,8 +31,15 @@ const UserPostContainer: React.FC<IUserPostContainerProps> = (props) => {
       const storedUserId = parseInt(localStorage.getItem("user_id") || "0", 10);
       console.log("Stored User ID:", storedUserId);
 
-      // Verwende den korrekten Endpunkt, der nur die Posts des aktuellen Benutzers zurückgibt
-      const response = await ApiGet(`profiles/${storedUserId}/posts/${currentPage}`);
+      // Verwende den korrekten Endpunkt basierend auf dem aktiven Tab
+      let endpoint = `profiles/${storedUserId}/posts/${currentPage}`;
+      if (props.activeTab === "saves") {
+        endpoint = `profiles/${storedUserId}/saves/${currentPage}`;
+      } else if (props.activeTab === "likes") {
+        endpoint = `profiles/${storedUserId}/likes/${currentPage}`;
+      }
+
+      const response = await ApiGet(endpoint);
       console.log("API Response:", response);
 
       if (response && response.status === "success") {
