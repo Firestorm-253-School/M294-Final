@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { ApiGet } from "../components/api";
 import socket from "../components/sockets/socket";
 import YouTube, { YouTubeProps } from "react-youtube";
 import RequestedSong from "../components/livefeed/RequestedSong";
 import { SendHorizontal, Volume2, VolumeX } from "lucide-react";
-import Message from "../components/livefeed/message";
 import Navbar from "../components/layout/Navbar";
 import SearchSongPopup from "../components/Popups/SearchSongPopup";
+import Message from "../components/livefeed/Message";
 
-export interface ISocketTestPageProps {}
+export interface ILivefeedPageProps {}
 
-const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
+const LivefeedPage: React.FC<ILivefeedPageProps> = (props) => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState("");
   const { livefeedId } = useParams();
@@ -25,6 +24,7 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
   const [selectedVote, setSelectedVote] = useState<number>(0);
   const [formattedTime, setFormattedTime] = useState("--:--");
   const [requestSongPopup, setRequestSongPopup] = useState(false);
+  const [voteCount, setVoteCount] = useState<any>([]);
 
   var countdownIntervalId: any = null;
   var timelineIntervalId: any = null;
@@ -104,6 +104,11 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
       );
     };
 
+    const handleLivefeedVote = (data: any) => {
+      console.log(data);
+      setVoteCount(data.votes);
+    };
+
     socket.on("error", handleError);
     socket.on("livefeed_message", handleLivefeedMessage);
     socket.on("livefeed_init_data", handleLivefeedInitData);
@@ -111,6 +116,7 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
     socket.on("livefeed_request_phase", handleLivefeedRequestPhase);
     socket.on("livefeed_voting_phase", handleLivefeedVotingPhase);
     socket.on("livefeed_play_song", handleLivefeedPlaySong);
+    socket.on("livefeed_vote_song", handleLivefeedVote);
 
     leaveLivefeed();
     setTimeout(() => {
@@ -125,6 +131,7 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
       socket.off("livefeed_request_phase", handleLivefeedRequestPhase);
       socket.off("livefeed_voting_phase", handleLivefeedVotingPhase);
       socket.off("livefeed_play_song", handleLivefeedPlaySong);
+      socket.off("livefeed_vote_song", handleLivefeedVote);
     };
   }, []);
 
@@ -380,14 +387,17 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
               </button>
             </div>
             <form className="flex flex-col gap-4 max-h-96">
-              {songs.map((song) => (
-                <RequestedSong
-                  song={song}
-                  vote={(requestedSongId) => voteSong(requestedSongId)}
-                  selectedVote={selectedVote}
-                  onChange={(e) => changeVote(e)}
-                />
-              ))}
+              {songs.map((song) => {
+                return (
+                  <RequestedSong
+                    voteCount={voteCount}
+                    song={song}
+                    vote={(requestedSongId) => voteSong(requestedSongId)}
+                    selectedVote={selectedVote}
+                    onChange={(e) => changeVote(e)}
+                  />
+                );
+              })}
             </form>
           </div>
         </div>
@@ -396,4 +406,4 @@ const SocketTestPage: React.FC<ISocketTestPageProps> = (props) => {
   );
 };
 
-export default SocketTestPage;
+export default LivefeedPage;

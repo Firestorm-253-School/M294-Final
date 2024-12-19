@@ -1,18 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export interface IRequestedSongProps {
   song: any;
   vote: (requestedSongId: number) => void;
   selectedVote: number;
   onChange: (e: any) => void;
+  voteCount: any[];
 }
 
 const RequestedSong: React.FC<IRequestedSongProps> = (props) => {
   const song = props.song;
+  const [voteCount, setVoteCount] = useState(0);
   useEffect(() => {
-    console.log("Song: ", props.selectedVote);
-    console.log(song.requestedSongId);
-  }, [props.selectedVote]);
+    if (props.voteCount.length <= 0) return;
+    props.voteCount.forEach((element) => {
+      console.log(element);
+      if (element.requestedSongId == song.requestedSongId) {
+        setVoteCount(element.voteCount);
+      }
+    });
+  }, [props.voteCount]);
 
   return (
     <>
@@ -33,7 +40,7 @@ const RequestedSong: React.FC<IRequestedSongProps> = (props) => {
             )}min ${Math.round(Math.round(song.duration) % 60)}s`}</p>
           </div>
         </div>
-        <p>0 Votes</p>
+        <p>{voteCount} Votes</p>
         {/* <button
           className="btn btn-sm"
           onClick={() => props.vote(song.requestedSongId)}

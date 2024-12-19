@@ -48,14 +48,19 @@ const LiveFeed: React.FC<ILiveFeedProps> = () => {
   return (
     <div>
       <Navbar />
-      {livefeeds.map((feed, index) => (
-        <LivefeedsCard
-          key={index}
-          feed={feed}
-          onFollow={(username) => console.log(`Follow ${username}`)}
-          onJoin={() => navigate(`/livefeed/${feed.livefeedId}`)}
-        />
-      ))}
+      <div className="container-center flex flex-col gap-4">
+        {livefeeds.map((feed, index) => (
+          <LivefeedsCard
+            key={index}
+            feed={feed}
+            onFollow={(username) => console.log(`Follow ${username}`)}
+            onJoin={() => {
+              navigate(`/livefeed/${feed.livefeedId}`);
+              window.location.reload();
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
